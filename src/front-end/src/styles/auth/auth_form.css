@@ -30,6 +30,8 @@ input[type="text"] {
    border: 1px solid #CCCCCC;
    border-radius: 4px;
    height: 23px;
+   font-size: 16px;
+   color: #111827;
 }
 
 #show-hide-toggle {
@@ -39,6 +41,7 @@ input[type="text"] {
    background: none;
    border: none;
    color: #6B7280;
+   text-decoration: underline;
 }
 
 input[type="submit"] {

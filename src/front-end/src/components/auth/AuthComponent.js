@@ -4,7 +4,7 @@ import AuthForm from "./utils/authForm";
 import AuthBottom from "./utils/authBottom";
 import "../../styles/auth/auth.css";
 
-const AuthComponent = ({ children, onClose, currPage = "updatePassword" }) => {
+const AuthComponent = ({ children, onClose, currPage = "signup" }) => {
    return (
       <div className="modal">
          <div className="modal-content">

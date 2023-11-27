@@ -31,7 +31,7 @@ const AuthForm = ({ currPage }) => {
             </div>
          )}
          <div className="form-group">
-            <input type="submit" value={currPage === 'signin' ? "Sign in" : currPage === 'signup' ? "Sign up" : "Update Password"} id="submit" />
+            <input type="submit" value={currPage === 'signin' ? "Sign in" : currPage === 'signup' ? "Create account" : "Update Password"} id="submit" />
          </div>
       </form>
    );

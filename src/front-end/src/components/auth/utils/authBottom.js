@@ -23,7 +23,7 @@ const AuthBottom = ({ currPage }) => {
             </p>
          )}
 
-         {/* No content for 'updatePassword' */}
+         {/* No content for update password page */}
       </div>
    );
 };
