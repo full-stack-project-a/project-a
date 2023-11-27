@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import AuthHeading from "./utils/authHeading";
-import AuthForm from "./utils/authForm";
-import AuthBottom from "./utils/authBottom";
+import AuthHeading from "./utils_components/authHeading";
+import AuthForm from "./utils_components/authForm";
+import AuthBottom from "./utils_components/authBottom";
 import "../../styles/auth/auth.css";
 
 const AuthComponent = ({ children, onClose, currPage = "signup" }) => {
