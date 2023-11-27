@@ -6,7 +6,7 @@ const AuthBottom = ({ currPage }) => {
       <div className="bottom-group">
          {currPage === 'signin' && (
             <>
-               <p>
+               <p id="top">
                   Don't have an account?{" "}
                   <a href="/signup" className="link">Sign up</a>
                </p>

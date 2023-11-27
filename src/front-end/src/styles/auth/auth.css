@@ -3,21 +3,33 @@
    justify-content: center;
    align-items: center;
    position: fixed;
-   z-index: 1;
    left: 0;
    top: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 1;
    width: 100%;
    height: 100%;
    overflow: auto;
+   flex-wrap: wrap;
 }
 
 .modal-content {
    background-color: #fefefe;
    padding: 30px 50px 50px 50px;
    width: 450px;
+   max-width: 100%;
    border-radius: 10px;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
    position: relative;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+   .modal-content {
+      width: 85%;
+      padding: 20px;
+   }
 }
 
 .close {
