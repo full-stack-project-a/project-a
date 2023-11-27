@@ -1,26 +1,20 @@
-import React from 'react';
-import '../../styles/auth/auth.css'; // Ensure to create this CSS file
+import React, { useState } from "react";
+import AuthHeading from "./utils/authHeading";
+import AuthForm from "./utils/authForm";
+import AuthBottom from "./utils/authBottom";
+import "../../styles/auth/auth.css";
 
-const AuthComponent = ({ children, onClose }) => {
+const AuthComponent = ({ children, onClose, currPage = "updatePassword" }) => {
    return (
       <div className="modal">
          <div className="modal-content">
-            <span className="close" onClick={onClose}>&times;</span>
+            <span className="close" onClick={onClose}>
+               &times;
+            </span>
             {children}
-            <h1>Sign in to your account</h1>
-            <form action="" method="get" className="form-example">
-               <div className="form-group">
-                  <label htmlFor="email">Email: </label>
-                  <input type="email" name="email" id="email" required />
-               </div>
-               <div className="form-group">
-                  <label htmlFor="password">Password: </label>
-                  <input type="password" name="password" id="password" required />
-               </div>
-               <div className="button-group">
-                  <input type="submit" value="Sign in" />
-               </div>
-            </form>
+            <AuthHeading currPage={currPage} />
+            <AuthForm currPage={currPage} />
+            <AuthBottom currPage={currPage} />
          </div>
       </div>
    );

@@ -1,0 +1,18 @@
+.bottom-group {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding-top: 10px;
+}
+
+.bottom-group p {
+   margin: 0;
+   color: #6B7280;
+   font-size: 14px;
+}
+
+.link {
+   color: blue;
+   text-decoration: underline;
+   cursor: pointer;
+}
