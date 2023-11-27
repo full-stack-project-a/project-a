@@ -41,7 +41,10 @@ const AuthForm = ({ currPage }) => {
    // Form submission handler
    const handleSubmit = (event) => {
       event.preventDefault();
-      if (true) {
+      if (emailError || passwordError) {
+         alert("Error in email or password, please try again!");
+      } else {
+         // handle success
       }
    };
 
@@ -55,7 +58,6 @@ const AuthForm = ({ currPage }) => {
                id="email"
                value={email}
                onChange={handleEmailChange}
-               required
                style={emailError ? errorInputStyle : null}
             />
             {emailError && <div className="error-message">{emailError}</div>}
@@ -69,7 +71,6 @@ const AuthForm = ({ currPage }) => {
                   id="password"
                   value={password}
                   onChange={handlePasswordChange}
-                  required
                   style={passwordError ? errorInputStyle : null}
                />
                <button
