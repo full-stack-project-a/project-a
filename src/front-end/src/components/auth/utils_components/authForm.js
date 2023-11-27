@@ -31,17 +31,17 @@ const AuthForm = ({ currPage }) => {
 
    // validation check
    useEffect(() => {
-      setEmailError(validateEmail(email));
+      (currPage !== "signin") && setEmailError(validateEmail(email));
    }, [email]);
 
    useEffect(() => {
-      setPasswordError(validatePassword(password));
+      (currPage !== "signin") && setPasswordError(validatePassword(password));
    }, [password]);
 
    // Form submission handler
    const handleSubmit = (event) => {
       event.preventDefault();
-      if (emailError || passwordError) {
+      if (currPage === "Signup" && (emailError || passwordError)) {
          alert("Error in email or password, please try again!");
       } else {
          // handle success
