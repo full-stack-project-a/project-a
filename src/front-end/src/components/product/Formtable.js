@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Button, Typography, TextField, Grid, Select, MenuItem, Avatar, Card, useMediaQuery, useTheme } from '@mui/material';
-import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack';
 
 const Formtable = () => {
     const theme = useTheme();
@@ -62,9 +61,7 @@ const Formtable = () => {
                                     Upload
                                 </Button>
                             ),
-                        }}  
-                    
-                    
+                        }}       
                     />
                 </Grid>
                 <Grid item xs={10} sm={10}>
