@@ -1,7 +1,110 @@
 .header {
-   background-color: black;
-   color: white;
-   padding: 10px;
+   display: flex;
+   flex-direction: row;
+   background-color: var(--primary-color-dark);
+   font-family: var(--primary-font-family);
+   font-size: 16px;
+   color: var(--primary-color-white);
    text-align: center;
-   height: 25px;
+   justify-content: space-between;
+   align-items: center;
+   height: 60px;
+}
+
+.logo-search-container {
+   display: flex;
+   justify-content: space-between;
+   margin-left: 64px;
+   gap: 64px;
+}
+
+.logo-container {
+   display: flex;
+   align-items: flex-end;
+   font-weight: 700;
+   font-size: 12px;
+   gap: 4px;
+
+}
+
+.logo-management {
+   font-size: 28px;
+}
+
+.search-bar {
+   width: 480px;
+   display: flex;
+   align-items: center; 
+   background-color: var(--primary-color-white);
+   border-radius: 8px;
+   margin: 4px 0px;
+   flex-wrap: wrap;
+ }
+
+ .searchText {
+   flex-grow: 1; 
+   margin-right: 10px; 
+   padding: 10px; 
+   border: 2px solid var(--primary-color-white); 
+   border-radius: 20px; 
+   outline: none; 
+   font-size: 16px;
+   color: var(--primary-color-dark); 
+ }
+
+ /* Removes the inner shadow in iOS */
+.searchText::-webkit-input-placeholder {
+   color: var(--primary-color-dark); 
+}
+
+.searchText:-ms-input-placeholder {
+   color: var(--primary-color-dark);
+}
+
+.searchText::placeholder {
+   color: var(--primary-color-dark);
+}
+ 
+ .searchButton {
+   background: none;
+   border: none; 
+   color: var(--primary-color-dark); 
+   cursor: pointer; 
+ }
+
+
+.searchIcon {
+   font-size: 24px;
+}
+
+.profile-cart-container {
+   display: flex;
+   gap: 48px;
+}
+
+.profile-container {
+   display: flex;
+   align-items: center;
+   gap: 4px;
+}
+
+.profile-person-icon {
+   font-size: 30px;
+}
+
+.profile-star-icon{
+   font-size: 12px;
+   color: var(--header-color-yellow);
+   transform: translateX(-10px);
+}
+
+.cart-container {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   margin-right: 64px;
+}
+
+.cart-icon {
+   font-size: 24px;
 }
