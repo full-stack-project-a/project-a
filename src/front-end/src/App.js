@@ -6,6 +6,7 @@ import AuthComponent from './components/auth/AuthComponent';
 import Formtable from './components/product/Formtable';
 import ProductPage from './components/product/ProductPage';
 import ProductCard from './components/product/CardStyle';
+import DetailPage from './components/product/DetailPage';
 
 function App() {
   return (
@@ -13,8 +14,10 @@ function App() {
       <Header /> 
       {/* <AuthComponent /> */}
       {/* <Formtable /> */}
-      <ProductPage />
+      {/* <ProductPage /> */}
+      
       {/* <ProductCard /> */}
+      <DetailPage />
       <Footer /> 
     </div>
   );
