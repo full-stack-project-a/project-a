@@ -1,0 +1,20 @@
+/*===== VARIABLES CSS =====*/
+:root{
+    
+    
+    /*===== Colors =====*/
+    --primary-color-dark: #111827;
+    --primary-color-white: #ffffff;
+    --header-color-yellow: #FCE944;
+    --button-color-blue: #5048E5;
+    --link-color-blue: #5048E5;
+    --icon-color-gray: #373A3C;
+    --text-color-gray: #373A3C;
+    --search-button-color-gray: #979797;
+    
+    /*===== Font and typography =====*/
+    --primary-font-family: sans-serif;
+    
+    /*===== Margenes =====*/
+
+  }
