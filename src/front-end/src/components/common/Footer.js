@@ -22,6 +22,7 @@ const Footer = () => {
             <a href='#'>Privacy Policies</a>
             <a href='#'>Help</a>
          </div>
+         
       </footer>
    );
 };
