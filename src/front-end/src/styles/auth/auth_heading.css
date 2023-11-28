@@ -1,0 +1,16 @@
+.heading-div {
+   margin-bottom: 30px;
+}
+
+.heading-div #header {
+   font-size: 2em;
+   font-weight: bold;
+   margin-top: 0.67em; 
+   margin-bottom: 0.67em; 
+   color: #111827;
+}
+
+.heading-div #lower-header {
+   font-size: 0.85em;
+   color: #6B7280;
+}
