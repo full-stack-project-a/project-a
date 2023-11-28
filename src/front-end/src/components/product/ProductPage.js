@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Box, Typography, useTheme, useMediaQuery, Grid } from '@mui/material';
+import { Box, Typography, useTheme, useMediaQuery, Grid } from '@mui/material';
 import ProductCard from './CardStyle';
 
 
