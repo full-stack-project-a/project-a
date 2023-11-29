@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../../styles/auth/auth_form.css";
+import styles from "../../../styles/auth/auth_form.module.css";
 import { validateEmail, validatePassword } from "../../../utils/auth/validation";
 
 const AuthForm = ({ currPage }) => {
@@ -49,9 +49,9 @@ const AuthForm = ({ currPage }) => {
    };
 
    return (
-      <form action="" method="get" className="form-example" onSubmit={handleSubmit}>
-         <div className="form-group">
-            <label htmlFor="email">Email</label>
+      <form action="" method="get" className={`${styles.formExample} ${styles.authForm}`} onSubmit={handleSubmit}>
+         <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.label}>Email</label>
             <input
                type="email"
                name="email"
@@ -60,11 +60,11 @@ const AuthForm = ({ currPage }) => {
                onChange={handleEmailChange}
                style={emailError ? errorInputStyle : null}
             />
-            {emailError && <div className="error-message">{emailError}</div>}
+            {emailError && <div className={styles.errorMessage}>{emailError}</div>}
          </div>
          {currPage !== 'updatePassword' && (
-            <div className="password">
-               <label htmlFor="password">Password</label>
+            <div className={styles.password}>
+               <label htmlFor="password" className={styles.label}>Password</label>
                <input
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -76,15 +76,16 @@ const AuthForm = ({ currPage }) => {
                <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  id="show-hide-toggle"
+                  className={styles.showHideToggle}
                   style={passwordError ? errorShowButtonStyle : null}
                >
                   {showPassword ? "Hide" : "Show"}
                </button>
-               {passwordError && <div className="error-message">{passwordError}</div>}
+
+               {passwordError && <div className={styles.errorMessage}>{passwordError}</div>}
             </div>
          )}
-         <div className="form-group">
+         <div className={styles.formGroup}>
             <input
                type="submit"
                value={currPage === 'signin' ? "Sign in" : currPage === 'signup' ? "Create account" : "Update Password"}

@@ -13,7 +13,7 @@
    margin-bottom: 20px;
 }
 
-label {
+.label {
    display: block;
    margin-bottom: 10px;
    text-align: left;
@@ -21,12 +21,12 @@ label {
    font-size: 16px;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
+.authForm input[type="email"],
+.authForm input[type="password"],
+.authForm input[type="text"] {
    width: 95%;
    padding: 10px;
-   margin-bottom: 5px;
+   margin-bottom: 10px;
    border: 1px solid #CCCCCC;
    border-radius: 4px;
    height: 23px;
@@ -34,7 +34,7 @@ input[type="text"] {
    color: #111827;
 }
 
-#show-hide-toggle {
+.showHideToggle {
    position: absolute;
    top: 55%;
    left: 87%;
@@ -44,7 +44,7 @@ input[type="text"] {
    text-decoration: underline;
 }
 
-input[type="submit"] {
+.authForm input[type="submit"] {
    background-color: #5048E5;
    color: white;
    height: 43px;
@@ -55,6 +55,7 @@ input[type="submit"] {
    border-radius: 3px;
    border-width: 0px;
    margin-top: 10px;
+   margin-bottom: 20px;
    cursor: pointer;
 }
 

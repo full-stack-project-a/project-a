@@ -4,9 +4,16 @@ import '../../styles/main/global.css';
 import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
+   const navigate = useNavigate();
+
+   const handleSignInClick = () => {
+      navigate('/signin');
+   };
+
    return (
       <header className="header">
          <div className='logo-search-container'>
@@ -22,7 +29,7 @@ const Header = () => {
          </div>
 
          <div className='profile-cart-container'>
-            <div className='profile-container'>
+            <div className='profile-container' onClick={handleSignInClick}> 
                <div className='profile-icons'>
                   <GoPerson className='profile-person-icon'/>
                   <FaStar className='profile-star-icon'/>
