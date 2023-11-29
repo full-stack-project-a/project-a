@@ -1,8 +1,14 @@
-.heading-div {
+.headingDiv {
    margin-bottom: 30px;
 }
 
-.heading-div #header {
+@media screen and (max-width: 600px) {
+   .headingDiv {
+      padding-top: 25px;
+   }
+}
+
+.header {
    font-size: 2em;
    font-weight: bold;
    margin-top: 0.67em; 
@@ -10,7 +16,7 @@
    color: #111827;
 }
 
-.heading-div #lower-header {
+.lowerHeader {
    font-size: 0.85em;
    color: #6B7280;
 }
