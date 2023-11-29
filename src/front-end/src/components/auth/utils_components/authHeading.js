@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../../styles/auth/auth_heading.css";
+import style from "../../../styles/auth/auth_heading.module.css";
 
 const AuthHeading = ({ currPage }) => {
    let headingText = '';
@@ -21,9 +21,9 @@ const AuthHeading = ({ currPage }) => {
    }
 
    return (
-      <div className='heading-div'>
-         <p id="header">{headingText}</p>
-         {subHeadingText && <p id="lower-header">{subHeadingText}</p>}
+      <div className={style.headingDiv}>
+         <p className={style.header}>{headingText}</p>
+         {subHeadingText && <p className={style.lowerHeader}>{subHeadingText}</p>}
       </div>
    );
 };

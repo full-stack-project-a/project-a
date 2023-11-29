@@ -49,13 +49,14 @@ const AuthForm = ({ currPage }) => {
    };
 
    return (
-      <form action="" method="get" className={`${styles.formExample} ${styles.authForm}`} onSubmit={handleSubmit}>
-         <div className={styles.formGroup}>
+      <form action="" method="get" className={styles.authForm} onSubmit={handleSubmit}>
+         <div className={`${styles.formGroup} ${styles.emailFormGroup}`}>
             <label htmlFor="email" className={styles.label}>Email</label>
             <input
                type="email"
                name="email"
                id="email"
+               className={styles.inputField}
                value={email}
                onChange={handleEmailChange}
                style={emailError ? errorInputStyle : null}
@@ -69,6 +70,7 @@ const AuthForm = ({ currPage }) => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
+                  className={styles.inputField}
                   value={password}
                   onChange={handlePasswordChange}
                   style={passwordError ? errorInputStyle : null}
@@ -81,15 +83,14 @@ const AuthForm = ({ currPage }) => {
                >
                   {showPassword ? "Hide" : "Show"}
                </button>
-
                {passwordError && <div className={styles.errorMessage}>{passwordError}</div>}
             </div>
          )}
          <div className={styles.formGroup}>
             <input
                type="submit"
+               className={styles.submitButton}
                value={currPage === 'signin' ? "Sign in" : currPage === 'signup' ? "Create account" : "Update Password"}
-               id="submit"
             />
          </div>
       </form>

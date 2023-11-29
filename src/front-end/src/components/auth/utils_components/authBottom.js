@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import "../../../styles/auth/auth_bottom.css";
+import { useNavigate } from 'react-router-dom';
+import styles from "../../../styles/auth/auth_bottom.module.css";
 
 const AuthBottom = ({ currPage }) => {
    const navigate = useNavigate();
@@ -10,23 +10,23 @@ const AuthBottom = ({ currPage }) => {
    };
 
    return (
-      <div className="bottom-group">
+      <div className={styles.bottomGroup}>
          {currPage === 'signin' && (
             <>
-               <p id="top">
+               <p className={`${styles.bottomGroupText} ${styles.top}`}>
                   Don't have an account?{" "}
-                  <span className="link" onClick={() => navigateAndReplace('/signup')}>Sign up</span>
+                  <span className={styles.link} onClick={() => navigateAndReplace('/signup')}>Sign up</span>
                </p>
-               <p>
-                  <span className="link" onClick={() => navigateAndReplace('/updatePassword')}>Forget password?</span>
+               <p className={styles.bottomGroupText}>
+                  <span className={styles.link} onClick={() => navigateAndReplace('/updatePassword')}>Forget password?</span>
                </p>
             </>
          )}
 
          {currPage === 'signup' && (
-            <p>
+            <p className={styles.bottomGroupText}>
                Already have an account?{" "}
-               <span className="link" onClick={() => navigateAndReplace('/signin')}>Sign in</span>
+               <span className={styles.link} onClick={() => navigateAndReplace('/signin')}>Sign in</span>
             </p>
          )}
 

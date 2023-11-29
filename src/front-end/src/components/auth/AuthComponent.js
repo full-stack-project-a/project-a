@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import AuthHeading from "./utils_components/authHeading";
 import AuthForm from "./utils_components/authForm";
 import AuthBottom from "./utils_components/authBottom";
-import "../../styles/auth/auth.css";
+import styles from "../../styles/auth/auth.module.css";
+import { AiOutlineClose } from 'react-icons/ai';
 
 const AuthComponent = ({ children, currPage = "signin" }) => {
    const navigate = useNavigate();
@@ -13,10 +14,10 @@ const AuthComponent = ({ children, currPage = "signin" }) => {
    };
 
    return (
-      <div className="modal">
-         <div className="modal-content">
-            <span className="close" onClick={onClose}>
-               &times;
+      <div className={styles.modal}>
+         <div className={styles.modalContent}>
+            <span className={styles.close} onClick={onClose}>
+               <AiOutlineClose />
             </span>
             {children}
             <AuthHeading currPage={currPage} />
