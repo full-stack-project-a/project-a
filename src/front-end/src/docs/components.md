@@ -178,3 +178,26 @@ This document provides an overview of the components used in the project, detail
 - used by `AuthComponent` as bottom navigation
 
 ---
+
+## AuthEmailSent
+
+### Purpose
+
+- The `AuthEmailSent` component is used to display a confirmation message to the user after they have requested a password update. It shows an SVG icon representing an email and a text message indicating that a password update link has been sent to their email.
+
+### Props
+
+- This component does not accept any props.
+
+### State
+
+- The component does not maintain its own state.
+
+### Usage Example
+
+```jsx
+<AuthEmailSent />
+```
+- used by `AuthComponent`
+
+---
