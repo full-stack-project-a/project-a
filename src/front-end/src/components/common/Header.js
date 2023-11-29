@@ -5,6 +5,7 @@ import CartModel from '../cart/CartModal'
 import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
@@ -13,6 +14,12 @@ const Header = () => {
 
    const toggleCartModal = () => {
       setShowCartModal(!showCartModal);
+   };
+
+   const navigate = useNavigate();
+
+   const handleSignInClick = () => {
+      navigate('/signin');
    };
 
    return (
@@ -50,7 +57,6 @@ const Header = () => {
             </div>
 
          </div>
-
          <CartModel show={showCartModal} close={toggleCartModal}>
          </CartModel>
       </header>
