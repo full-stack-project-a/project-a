@@ -41,7 +41,7 @@ const Header = () => {
             </div>
 
             <div className='profile-cart-container'>
-               <div className='profile-container'>
+               <div className='profile-container' onClick={handleSignInClick}>
                   <div className='profile-icons'>
                      <GoPerson className='profile-person-icon' />
                      <FaStar className='profile-star-icon' />
