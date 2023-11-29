@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/cart/cart.css'; // Your CSS file for styling
+import '../../styles/cart/cart.css';
 import { defaultCartItems } from '../../temp/cartData'
 import { TAX_RATE, DISCOUNT_CODE } from '../../temp/cartConfig';
 import { calculateSubtotal, calculateTax, applyDiscount } from '../../utils/cartUtils';
+import CartItem from './CartItem';
 
-
-const CartModal = ({ show, initialCartItems, close }) => {
+const CartModal = ({ show, close }) => {
 
     const [cartItems, setCartItems] = useState(defaultCartItems);
     const [discountCode, setDiscountCode] = useState('');
@@ -14,6 +14,26 @@ const CartModal = ({ show, initialCartItems, close }) => {
     useEffect(() => {
         // Update subtotal, tax, etc. when cartItems change
     }, [cartItems]);
+
+    const incrementQuantity = (itemId) => {
+        const updatedItems = cartItems.map(item => {
+            if (item.id === itemId) {
+                return { ...item, quantity: item.quantity + 1 };
+            }
+            return item;
+        });
+        setCartItems(updatedItems);
+    };
+
+    const decrementQuantity = (itemId) => {
+        const updatedItems = cartItems.map(item => {
+            if (item.id === itemId && item.quantity > 1) {
+                return { ...item, quantity: item.quantity - 1 };
+            }
+            return item;
+        });
+        setCartItems(updatedItems);
+    };
 
     const handleRemoveItem = (itemId) => {
         const updatedItems = cartItems.filter(item => item.id !== itemId);
@@ -27,15 +47,8 @@ const CartModal = ({ show, initialCartItems, close }) => {
 
     const subtotal = calculateSubtotal(cartItems);
     const tax = calculateTax(subtotal, TAX_RATE);
-    const total = subtotal + tax - discount;
+    const total = (subtotal + tax - discount);
 
-    const removeItem = (itemId) => {
-        console.log(`Item with id ${itemId} removed from the cart`);
-    };
-
-    const applyDiscount = () => {
-        console.log("Apply Discount");
-    }
 
     const onCheckout = () => {
         console.log("Checkout process is going on");
@@ -56,25 +69,13 @@ const CartModal = ({ show, initialCartItems, close }) => {
 
                 <div className="cart-items-list">
                     {cartItems.map((item, index) => (
-                        <div key={index} className="cart-item">
-                            <img src={item.image} alt={item.name} />
-
-                            <div className="cart-item-details">
-                                <div className='cart-item-name-price'>
-                                    <h3>{item.name}</h3>
-                                    <p>${item.price}</p>
-                                </div>
-                                <div className='cart-selector-remove'>
-                                    <div className="quantity-selector">
-                                        <button>-</button>
-                                        <span>{item.quantity}</span>
-                                        <button>+</button>
-                                    </div>
-                                    <button className='cart-remove-button' onClick={() => handleRemoveItem(item.id)}>Remove</button>
-                                </div>
-
-                            </div>
-                        </div>
+                        <CartItem
+                            key={item.id} // It's better to use item.id instead of index if possible
+                            item={item}
+                            incrementQuantity={incrementQuantity}
+                            decrementQuantity={decrementQuantity}
+                            handleRemoveItem={handleRemoveItem}
+                        />
                     ))}
                 </div>
 
@@ -92,19 +93,19 @@ const CartModal = ({ show, initialCartItems, close }) => {
                 <div className="cart-summary">
                     <div className="cart-summary-item">
                         <h4>Subtotal</h4>
-                        <h4>${subtotal}</h4>
+                        <h4>${subtotal.toFixed(2)}</h4>
                     </div>
                     <div className="cart-summary-item">
                         <h4>Tax</h4>
-                        <h4>${tax}</h4>
+                        <h4>${tax.toFixed(2)}</h4>
                     </div>
                     <div className="cart-summary-item">
                         <h4>Discount</h4>
-                        <h4>-${discount}</h4>
+                        <h4>-${discount.toFixed(2)}</h4>
                     </div>
                     <div className="cart-summary-item">
                         <h4>Estimated total</h4>
-                        <h4>${subtotal + tax - discount}</h4>
+                        <h4>${total.toFixed(2)}</h4>
                     </div>
                 </div>
                 <div className='checkout-btn-container'>

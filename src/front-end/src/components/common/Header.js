@@ -46,7 +46,6 @@ const Header = () => {
                      <GoPerson className='profile-person-icon' />
                      <FaStar className='profile-star-icon' />
                   </div>
-
                   <p>Sign in</p>
                </div>
                <div className='cart-container' onClick={toggleCartModal}>
