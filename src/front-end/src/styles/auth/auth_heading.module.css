@@ -13,10 +13,10 @@
    font-weight: bold;
    margin-top: 0.67em; 
    margin-bottom: 0.67em; 
-   color: #111827;
+   color: var(--primary-color-dark);
 }
 
 .lowerHeader {
    font-size: 0.85em;
-   color: #6B7280;
+   color: var(--auth-option-gray);
 }

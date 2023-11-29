@@ -17,7 +17,7 @@
    display: block;
    margin-bottom: 10px;
    text-align: left;
-   color: #6B7280;
+   color: var(--auth-option-gray);
    font-size: 16px;
 }
 
@@ -29,11 +29,11 @@
    width: 95%;
    padding: 10px;
    margin-bottom: 5px;
-   border: 1px solid #CCCCCC;
+   border: 1px solid var(--auth-input-border-gray);
    border-radius: 4px;
    height: 23px;
    font-size: 16px;
-   color: #111827;
+   color: var(--primary-color-dark);
 }
 
 .showHideToggle {
@@ -42,13 +42,13 @@
    left: 87%;
    background: none;
    border: none;
-   color: #6B7280;
+   color: var(--auth-option-gray);
    text-decoration: underline;
 }
 
 .submitButton {
-   background-color: #5048E5;
-   color: white;
+   background-color: var(--button-color-blue);
+   color: var(--primary-color-white);
    height: 43px;
    width: 100%;
    align-self: center;
@@ -68,18 +68,18 @@
 
 .bottomGroupText {
    margin: 0;
-   color: #6B7280;
+   color: var(--auth-option-gray);
    font-size: 14px;
 }
 
 .link {
-   color: blue;
+   color: var(--link-color-blue);
    text-decoration: underline;
    cursor: pointer;
 }
 
 .errorMessage {
-   color: #FC5A44;
+   color: var(--auth-validation-error-red);
    align-self: flex-end;
    font-size: 14px;
 }

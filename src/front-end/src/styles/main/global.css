@@ -11,6 +11,10 @@
     --icon-color-gray: #373A3C;
     --text-color-gray: #373A3C;
     --search-button-color-gray: #979797;
+    --auth-option-gray: #6B7280;
+    --auth-input-border-gray: #CCCCCC;
+    --auth-validation-error-red: #FC5A44;
+    --auth-bkg-white: #fefefe;
     
     /*===== Font and typography =====*/
     --primary-font-family: sans-serif;
