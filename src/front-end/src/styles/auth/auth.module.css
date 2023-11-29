@@ -14,7 +14,7 @@
    flex-wrap: wrap;
 }
 
-.modal-content {
+.modalContent {
    background-color: #fefefe;
    padding: 30px 50px 50px 50px;
    width: 450px;
@@ -26,17 +26,20 @@
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {
-   .modal-content {
+   .modalContent {
       width: 85%;
       padding: 20px;
    }
 }
 
 .close {
-   color: #aaa;
-   float: right;
-   font-size: 28px;
-   font-weight: bold;
+   position: absolute;
+   top: 15px;
+   right: 15px;
+   color: #373A3C;
+   font-size: 30px;
+   cursor: pointer;
+   z-index: 2; 
 }
 
 .close:hover,

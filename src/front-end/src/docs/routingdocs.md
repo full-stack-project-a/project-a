@@ -35,6 +35,27 @@ This document provides detailed descriptions of the front-end routes in the shop
 - **Description:** Interface for adding new products to the website.
 - **Functionality:** Administrators can add new product information via this page.
 
+### 5. Sign In Page
+
+- **Path:** `/signin`
+- **Method:** POST
+- **Description:** This route leads to the sign-in page where existing users can log into their accounts.
+- **Functionality:** Provides a form for users to enter their credentials (email and password) to access their account.
+
+### 6. Sign Up Page
+
+- **Path:** `/signup`
+- **Method:** POST
+- **Description:** The sign-up page allows new users to create an account on the website.
+- **Functionality:** Offers a registration form where new users can create an account.
+
+### 7. Update Password Page
+
+- **Path:** `/updatePassword`
+- **Method:** POST
+- **Description:** This route is used for updating a user's password.
+- **Functionality:** Users can reset or update their password using this page.
+
 ## Appendix
 
 - **Version:** 1.0
