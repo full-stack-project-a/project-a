@@ -18,10 +18,11 @@ const Footer = () => {
             <a href='www.facebook.com'><FaFacebook /></a>
          </div>
          <div className='footer-links'>
-            <a href='#'>Contact me</a>
-            <a href='#'>Privacy Policies</a>
-            <a href='#'>Help</a>
+            <a href='www.google.com'>Contact me</a>
+            <a href='www.google.com'>Privacy Policies</a>
+            <a href='www.google.com'>Help</a>
          </div>
+         
       </footer>
    );
 };

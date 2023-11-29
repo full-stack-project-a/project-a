@@ -1,43 +1,52 @@
 .header {
    display: flex;
-   flex-direction: row;
+   flex-wrap: wrap;
+   position: fixed;
+   width: 100%;
+   height: fit-content;
    background-color: var(--primary-color-dark);
-   font-family: var(--primary-font-family);
    font-size: 16px;
-   color: var(--primary-color-white);
-   text-align: center;
-   justify-content: space-between;
    align-items: center;
-   height: 60px;
+   gap: 64px;
 }
 
-.logo-search-container {
+.header-container {
    display: flex;
-   justify-content: space-between;
-   margin-left: 64px;
-   gap: 64px;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primary-color-white);
+   font-family: var(--primary-font-family);
+   width: 100%;
+   margin: 4px 64px;
+   gap: 48px;
 }
 
 .logo-container {
    display: flex;
-   align-items: flex-end;
+   align-items: center;
    font-weight: 700;
    font-size: 12px;
-   gap: 4px;
-
 }
 
 .logo-management {
    font-size: 28px;
 }
 
+.logo-management-rest {
+   font-size: 28px;
+}
+
+.logo-chuwa {
+   margin: 0px 0px 0px 8px;
+}
+
 .search-bar {
-   width: 480px;
+   flex-grow: 1;
    display: flex;
    align-items: center; 
    background-color: var(--primary-color-white);
    border-radius: 8px;
-   margin: 4px 0px;
+   margin: 4px 128px 4px 0px;
    flex-wrap: wrap;
  }
 
@@ -89,23 +98,82 @@
    cursor: pointer;
 }
 
+.profile-icons {
+   display: flex;
+   align-items: flex-end;
+}
+
 .profile-person-icon {
    font-size: 30px;
 }
 
-.profile-star-icon{
+.profile-star-icon {
    font-size: 12px;
    color: var(--header-color-yellow);
-   transform: translateX(-10px);
+   margin-left: -10px;
 }
 
 .cart-container {
    display: flex;
    align-items: center;
    gap: 8px;
-   margin-right: 64px;
 }
 
 .cart-icon {
    font-size: 24px;
 }
+
+@media screen and (max-width: 1200px) {
+   /* Styles for large devices like laptops and desktops */
+   .logo-management-rest {
+      display: none;
+   }
+
+   .logo-chuwa {
+      margin: 0px;
+   }
+
+}
+
+@media screen and (max-width: 935px) {
+   /* Styles for medium devices like landscape tablets */
+
+   .header {
+      gap: 4px;
+   }
+
+   .header-container {
+      gap: 8px;
+      justify-content: space-between;
+   }
+
+   .logo-container {
+      flex: 1;
+      margin: 0px;
+   }
+
+   .profile-cart-container {
+      flex: 1;
+      margin: 0px;
+   }
+   
+
+   .search-bar {
+      flex-basis: 100%; 
+      margin: 0px;
+      order: 3; 
+   }
+}
+
+@media screen and (max-width: 600px) {
+
+   .header-container {
+      margin: 4px 32px;
+   }
+   .profile-container p {
+      display: none;
+   }
+
+
+}
+
