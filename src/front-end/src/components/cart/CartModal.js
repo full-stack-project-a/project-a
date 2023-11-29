@@ -1,45 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/cart/cart.css'; // Your CSS file for styling
-import item1Image from '../../temp/images/Meta-Quest2-VR.png'
-import item2Image from '../../temp/images/iWatch.png'
+import { defaultCartItems } from '../../temp/cartData'
+import { TAX_RATE, DISCOUNT_CODE } from '../../temp/cartConfig';
+import { calculateSubtotal, calculateTax, applyDiscount } from '../../utils/cartUtils';
 
-const CartModal = ({ show, cartItems, close, children }) => {
-    if (!show) return null;
 
-    cartItems = [
-        {
-            id: 1,
-            name: "Meta Quest2 VR",
-            image: item1Image,
-            quantity: 1,
-            price: 299.00
-        },
-        {
-            id: 2,
-            name: "iWatch",
-            image: item2Image,
-            quantity: 2,
-            price: 100.00
-        },
-    ];
+const CartModal = ({ show, initialCartItems, close }) => {
+
+    const [cartItems, setCartItems] = useState(defaultCartItems);
+    const [discountCode, setDiscountCode] = useState('');
+    const [discount, setDiscount] = useState(0);
+
+    useEffect(() => {
+        // Update subtotal, tax, etc. when cartItems change
+    }, [cartItems]);
+
+    const handleRemoveItem = (itemId) => {
+        const updatedItems = cartItems.filter(item => item.id !== itemId);
+        setCartItems(updatedItems);
+    };
+
+    const handleApplyDiscount = () => {
+        const discountValue = applyDiscount(discountCode, DISCOUNT_CODE);
+        setDiscount(discountValue);
+    };
+
+    const subtotal = calculateSubtotal(cartItems);
+    const tax = calculateTax(subtotal, TAX_RATE);
+    const total = subtotal + tax - discount;
 
     const removeItem = (itemId) => {
-        // Logic to remove the item from the cart
         console.log(`Item with id ${itemId} removed from the cart`);
-        // You will need to update the cart state as well, which might be passed down as props or managed via context or Redux
     };
 
     const applyDiscount = () => {
         console.log("Apply Discount");
     }
 
-    const subtotal = 499.00;
-    const tax = 49.90;
-    const discount = 20.00;
-
     const onCheckout = () => {
         console.log("Checkout process is going on");
     }
+
+    if (!show) return null;
 
     return (
         <div className="cart-modal" onClick={close}>
@@ -68,7 +70,7 @@ const CartModal = ({ show, cartItems, close, children }) => {
                                         <span>{item.quantity}</span>
                                         <button>+</button>
                                     </div>
-                                    <button className='cart-remove-button' onClick={() => removeItem(item.id)}>Remove</button>
+                                    <button className='cart-remove-button' onClick={() => handleRemoveItem(item.id)}>Remove</button>
                                 </div>
 
                             </div>
@@ -79,8 +81,8 @@ const CartModal = ({ show, cartItems, close, children }) => {
                 <div className="discount-code">
                     <p>Appy Discount Code</p>
                     <div className='apply-discount-code'>
-                        <input type="text" className="discount-input" placeholder="20 DOLLAR OFF" />
-                        <button onClick={applyDiscount}>Apply</button>
+                        <input type="text" className="discount-input" value={discountCode} onChange={(e) => setDiscountCode(e.target.value)} placeholder="20 DOLLAR OFF" />
+                        <button onClick={handleApplyDiscount}>Apply</button>
                     </div>
                     <span class="horizontal-line"></span>
                 </div>

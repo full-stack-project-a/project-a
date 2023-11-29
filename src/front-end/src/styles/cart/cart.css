@@ -101,6 +101,17 @@
 }
 
 .quantity-selector {
+  display: flex;
+}
+
+.quantity-selector span {
+  border: 1px solid var(--primary-color-light-gray);
+  padding: 1px 6px;
+}
+
+.quantity-selector button {
+  background-color: transparent;
+  border: 1px solid var(--primary-color-light-gray);
 }
 
 .discount-code {
