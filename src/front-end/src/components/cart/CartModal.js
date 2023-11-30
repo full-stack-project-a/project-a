@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/cart/cart.css';
 import { defaultCartItems } from '../../temp/cartData'
 import { TAX_RATE, DISCOUNT_CODE } from '../../temp/cartConfig';
-import { calculateSubtotal, calculateTax, applyDiscount } from '../../utils/cartUtils';
+import { calculateSubtotal, calculateTax, applyDiscount, calculateCartItemsNumber } from '../../utils/cartUtils';
 import CartItem from './CartItem';
 
 const CartModal = ({ show, close }) => {
@@ -48,6 +48,7 @@ const CartModal = ({ show, close }) => {
     const subtotal = calculateSubtotal(cartItems);
     const tax = calculateTax(subtotal, TAX_RATE);
     const total = (subtotal + tax - discount);
+    const itemsNumber = calculateCartItemsNumber(cartItems);
 
 
     const onCheckout = () => {
@@ -62,7 +63,7 @@ const CartModal = ({ show, close }) => {
                 <div className="cart-modal-header">
                     <div className="cart-modal-header-label">
                         <h2>Cart </h2>
-                        <p>({cartItems.length})</p>
+                        <p>({itemsNumber})</p>
                     </div>
                     <span className="cart-modal-close" onClick={close}>&times;</span>
                 </div>

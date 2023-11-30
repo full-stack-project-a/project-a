@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.main-content {
+  padding-top: 70px; /* Adjust based on header height */
+  padding-bottom: 70px; /* Adjust based on footer height */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +41,16 @@
     transform: rotate(360deg);
   }
 }
+
+@media screen and (max-width: 900px) {
+  .main-content {
+    padding-top: 109px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding-bottom: 120px;
+  }
+}
+

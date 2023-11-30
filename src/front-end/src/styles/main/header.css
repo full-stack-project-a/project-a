@@ -8,6 +8,7 @@
    font-size: 16px;
    align-items: center;
    gap: 64px;
+   z-index: 9999;
 }
 
 .header-container {
@@ -135,7 +136,7 @@
 
 }
 
-@media screen and (max-width: 935px) {
+@media screen and (max-width: 900px) {
    /* Styles for medium devices like landscape tablets */
 
    .header {
