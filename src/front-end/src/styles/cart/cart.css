@@ -18,7 +18,7 @@
   color: var(--primary-color-dark);
   width: fit-content;
   height: 70vh;
-  max-height: 720px;
+  max-height: 760px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
@@ -124,7 +124,6 @@
   gap: 24px;
   width: 100%;
   align-items: center;
-  /* justify-content: space-between; */
 }
 
 .apply-discount-code input {
@@ -144,10 +143,10 @@
 }
 
 .horizontal-line {
-  display: block; /* Or 'inline-block' */
-  width: 100%; /* Length of the line */
-  height: 1px; /* Thickness of the line */
-  background-color: var(--primary-color-light-gray); /* Color of the line */
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--primary-color-light-gray);
   margin: 24px 0px 0px 0px;
 }
 
@@ -185,10 +184,6 @@
 }
 
 @media screen and (max-width: 480px) {
-  .cart-modal {
-    position: relative;
-  }
-
   .cart-item-name-price {
     flex-direction: column;
     align-items: self-start;

@@ -71,7 +71,7 @@ const CartModal = ({ show, close }) => {
                 <div className="cart-items-list">
                     {cartItems.map((item, index) => (
                         <CartItem
-                            key={item.id} // It's better to use item.id instead of index if possible
+                            key={item.id}
                             item={item}
                             incrementQuantity={incrementQuantity}
                             decrementQuantity={decrementQuantity}
@@ -83,7 +83,7 @@ const CartModal = ({ show, close }) => {
                 <div className="discount-code">
                     <p>Appy Discount Code</p>
                     <div className='apply-discount-code'>
-                        <input type="text" className="discount-input" value={discountCode} onChange={(e) => setDiscountCode(e.target.value)} placeholder="20 DOLLAR OFF" />
+                        <input type="text" className="discount-input" value={discountCode} onChange={(e) => setDiscountCode(e.target.value)} placeholder="20DOLLAROFF" />
                         <button onClick={handleApplyDiscount}>Apply</button>
                     </div>
                     <span class="horizontal-line"></span>
