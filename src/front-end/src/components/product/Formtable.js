@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography, TextField, Grid, Select, MenuItem, Avatar, Card, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Typography, TextField, Grid, Select, MenuItem, Avatar, Card, useMediaQuery, useTheme, Paper } from '@mui/material';
 
 const Formtable = () => {
     const theme = useTheme();
@@ -7,11 +7,15 @@ const Formtable = () => {
     return (
         <div >
             <Box style={{ margin: '0 auto', maxWidth: 800 }}>
-                <Typography variant='h4' align={isMobile? 'center': 'left'}>
-                    Add Product
-                </Typography>
+            <Grid container spacing={3}>
+                <Grid item xs={12} sm={12}>
+                    <Typography variant='h4' align={isMobile? 'center': 'left'}>
+                        Add Product
+                    </Typography>
+                </Grid>
+            </Grid>
             </Box>
-            
+            <Paper elevation={3} style={{ margin: '0 auto', maxWidth: 1000 }}>
             <Grid container spacing={3} style={{ margin: '0 auto', maxWidth: 800 }}>   
                 <Grid item xs={12} sm={12}>
                     <span style={{display: 'flex', alignItems: 'center'}}> Product Name </span>
@@ -80,6 +84,7 @@ const Formtable = () => {
                     }} fullWidth>Submit</Button>
                 </Grid>
             </Grid> 
+            </Paper>
         </div>
     );
 }
