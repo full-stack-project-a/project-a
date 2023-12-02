@@ -8,7 +8,11 @@ export const calculateTax = (subtotal, taxRate) => {
 
 export const applyDiscount = (code, validCode) => {
     if (code === validCode) {
-        return 20; // Example discount value
+        return 20;
     }
     return 0;
 };
+
+export const calculateCartItemsNumber = (cartItems) => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+}
