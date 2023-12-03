@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
 import React from 'react';
+import AddtoCart from './AddtoCartButton';
 const theme = createTheme({
     palette: {
         primary: {
@@ -36,11 +37,12 @@ const ProductCard = () => {
                 </Button> */}
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
-                        <Button variant="contained" color="primary" size="large" style={{
+                        {/* <Button variant="contained" color="primary" size="large" style={{
                             backgroundColor: '#5048E5',
                         }} fullWidth>
                             Add
-                        </Button>
+                        </Button> */}
+                        <AddtoCart />
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" size="large" style={{
