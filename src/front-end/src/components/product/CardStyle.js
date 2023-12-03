@@ -1,9 +1,16 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
 import React from 'react';
-
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#5048E5',
+        },
+    },
+});
 const ProductCard = () => {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <ThemeProvider theme={theme}>
+        <Card >
             <CardMedia
             component="img"
             alt="green iguana"
@@ -45,6 +52,7 @@ const ProductCard = () => {
             </CardActions>
             </CardContent>            
         </Card>
+        </ThemeProvider>
     )
 }
 export default ProductCard;
