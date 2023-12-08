@@ -65,6 +65,32 @@ Document:
   }
 }
 ```
+## Update A Product
+### API Endpoint Design
+* Endpoint: `/api/v1/products/:id`
+* Method: `PUT`
+### Request Body
+```json
+{
+  "name": "product name",
+  "description": "product description",
+  "category": "product category",
+  "price": price,
+  "inStockQuantity": quantity,
+  "imageUrl": "image URL"
+}
+```
+### Authorization
+* Required
+* Type: TBD
+### Response
+* Status Code: 200 (OK)
+```json
+{
+  "message": "Product updated successfully",
+  "id": "product id"
+}
+```
 ## Get All Products
 ### API Endpoint Design
 * Endpoint: `/api/v1/products`

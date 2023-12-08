@@ -1,14 +1,11 @@
 const express = require('express');
 const Product = require('../models/product');
 const router = express.Router();
+const productController = require('../controllers/productController');
 
-router.post('/', async (req, res) => {
-    try {
-        const newProduct = new Product(req.body);
-        const savedProduct = await newProduct.save();
-        res.status(201).json(savedProduct);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+router.post('/', productController.createProduct);
+router.get('/:id', productController.getProductByID);
+router.put('/:id', productController.editProduct);
+router.get('/', productController.getProducts);
+
 module.exports = router;
