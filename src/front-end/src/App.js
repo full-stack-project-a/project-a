@@ -1,4 +1,4 @@
-// import logo from './logo.svg';
+import logo from './logo.svg';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -18,16 +18,19 @@ function App() {
       <Router>
          <div className="App">
             <Header />
-            <Routes>
-               {/* Define your routes here */}
-               <Route path="/signin" element={<AuthComponent currPage="signin" />} />
-               <Route path="/signup" element={<AuthComponent currPage="signup" />} />
-               <Route path="/updatePassword" element={<AuthComponent currPage="updatePassword" />} />
-               <Route path="/products" element={<ProductPage/>} />
-               <Route path="/products/1" element={<DetailPage/>} />
-               <Route path="/products/new" element={<Formtable/>} />
-               {/* Add more routes as needed */}
-            </Routes>
+            <div className="main-content">
+               <Routes>
+                  {/* Define your routes here */}
+                  <Route path="/signin" element={<AuthComponent currPage="signin" />} />
+                  <Route path="/signup" element={<AuthComponent currPage="signup" />} />
+                  <Route path="/updatePassword" element={<AuthComponent currPage="updatePassword" />} />
+                  <Route path="/products" element={<ProductPage />} />
+                  <Route path="/products/1" element={<DetailPage />} />
+                  <Route path="/products/new" element={<Formtable />} />
+                  {/* Add more routes as needed */}
+               </Routes>
+            </div>
+
             <Footer />
          </div>
       </Router>

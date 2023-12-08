@@ -5,12 +5,15 @@
     /*===== Colors =====*/
     --primary-color-dark: #111827;
     --primary-color-white: #ffffff;
+    --primary-color-blue: #5048E5;
+    --primary-color-gray: #373A3C;
+    --primary-color-light-gray: #979797;
     --header-color-yellow: #FCE944;
-    --button-color-blue: #5048E5;
-    --link-color-blue: #5048E5;
     --icon-color-gray: #373A3C;
     --text-color-gray: #373A3C;
     --search-button-color-gray: #979797;
+    --button-color-blue: #5048E5;
+    --link-color-blue: #5048E5;
     --auth-option-gray: #6B7280;
     --auth-input-border-gray: #CCCCCC;
     --auth-validation-error-red: #FC5A44;
