@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../../../styles/auth/auth_form.module.css";
 import { validateEmail, validatePassword } from "../../../utils/auth/validation";
 
-const AuthForm = ({ currPage }) => {
+const AuthForm = ({ currPage, onEmailSent }) => {
    // State to store email and password
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
@@ -41,10 +41,23 @@ const AuthForm = ({ currPage }) => {
    // Form submission handler
    const handleSubmit = (event) => {
       event.preventDefault();
-      if (currPage === "Signup" && (emailError || passwordError)) {
-         alert("Error in email or password, please try again!");
-      } else {
-         // handle success
+      switch (currPage) {
+         case "signup":
+            if (emailError || passwordError) {
+               alert("Error in email or password, please try again!");
+            }
+            break;
+         case "updatePassword":
+            if (!emailError) {
+               // If email is valid, trigger the email sent action
+               onEmailSent();
+            } else {
+               alert("Please enter a valid email!");
+            }
+            break;
+         default:
+            // Default action for other pages...
+            break;
       }
    };
 

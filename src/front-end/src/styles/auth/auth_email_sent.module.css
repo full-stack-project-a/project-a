@@ -1,0 +1,16 @@
+.emailSentContainer {
+   text-align: center;
+   padding: 120px 30px 120px 30px;
+}
+
+.emailSentIcon {
+   color: var(--link-color-blue); 
+   font-size: 50px;
+   margin-bottom: 0px;
+}
+
+.emailSentText {
+   color: black;
+   font-size: 17px;
+   font-weight: bold;
+}

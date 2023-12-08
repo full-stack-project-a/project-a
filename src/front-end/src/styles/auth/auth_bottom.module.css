@@ -19,12 +19,12 @@
 
 .bottomGroupText {
    margin: 0;
-   color: #6B7280;
+   color: var(--auth-option-gray);
    font-size: 15px;
 }
 
 .link {
-   color: blue;
+   color: var(--link-color-blue);
    text-decoration: underline;
    cursor: pointer;
    font-size: 15px;
