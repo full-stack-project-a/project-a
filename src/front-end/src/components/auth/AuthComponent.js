@@ -3,14 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import AuthHeading from "./utils_components/authHeading";
 import AuthForm from "./utils_components/authForm";
 import AuthBottom from "./utils_components/authBottom";
+import AuthEmailSent from "./utils_components/authEmailSent";
 import styles from "../../styles/auth/auth.module.css";
 import { AiOutlineClose } from 'react-icons/ai';
 
 const AuthComponent = ({ children, currPage = "signin" }) => {
+   const [isEmailSent, setIsEmailSent] = useState(false);
    const navigate = useNavigate();
 
    const onClose = () => {
       navigate(-1); // Navigate back to the previous page
+   };
+
+   // Function to handle sending email (to be triggered on form submission)
+   const handleEmailSent = () => {
+      setIsEmailSent(true);
    };
 
    return (
@@ -20,9 +27,14 @@ const AuthComponent = ({ children, currPage = "signin" }) => {
                <AiOutlineClose />
             </span>
             {children}
-            <AuthHeading currPage={currPage} />
-            <AuthForm currPage={currPage} />
-            <AuthBottom currPage={currPage} />
+            {!isEmailSent && (
+               <>
+                  <AuthHeading currPage={currPage} />
+                  <AuthForm currPage={currPage} onEmailSent={handleEmailSent} />
+                  <AuthBottom currPage={currPage} />
+               </>
+            )}
+            {isEmailSent && <AuthEmailSent />}
          </div>
       </div>
    );
