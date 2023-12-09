@@ -10,8 +10,13 @@ To start the Express.js back-end server, follow these steps:
     ```shell
     npm install
     ```
+2. for Local Runnig
+    You need create a .env file in the root directory of the project and add the following environment variables:
+    ```shell
+    MONGODB_URL=<Ur mongdb config infomation>
+    ```
 
-2. Start the server by running the following command:
+3. Start the server by running the following command:
     ```shell
     npm start
     ```
