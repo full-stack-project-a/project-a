@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/', usersRouter);
 // /api/v1/products
 app.use(bodyParser.json());
 app.use('/api/v1/products', productRouter);
