@@ -4,14 +4,14 @@
 - **User Model (MongoDB)**: 
   - `username`: String, required
   - `password`: String, required, hashed (sha256)
-  - `role`: String, default to 'user', can be 'vendor' or 'user'
+  - `role`: String, default to 'customer', can be 'vendor' or 'customer'
 
 ## Authentication Flow
 
 ### 1. Sign Up
 - **API Endpoint**: `/api/auth/signup`
 - **Method**: POST
-- **Payload**: Username, password, role (optional, default to 'user').
+- **Payload**: Username, password, role (optional, default to 'customer').
 - **Backend Logic**: 
   - Hash the password.
   - Create a new user document in MongoDB.
