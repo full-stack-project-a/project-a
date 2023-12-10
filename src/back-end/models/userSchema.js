@@ -20,7 +20,7 @@ const userSchema = new Schema({
 });
 
 // pre-hash password before store to db
-userSchema.pre('save', next => {
+userSchema.pre('save', function(next) {
    if (!this.isModified('password')) return next();
    try {
       const hash = crypto.createHash('sha256').update(this.password).digest('hex');

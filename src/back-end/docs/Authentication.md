@@ -17,6 +17,14 @@
   - Create a new user document in MongoDB.
 - **Response**: JWT token or error.
 
+``` json
+{
+  "username": "newuser",
+  "password": "newpassword",
+  "role": "user"
+}
+```
+
 ### 2. Sign In
 - **API Endpoint**: `/api/auth/signin`
 - **Method**: POST

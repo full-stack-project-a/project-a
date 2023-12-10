@@ -2,11 +2,23 @@ const { User } = require("../models/userSchema");
 const crypto = require('crypto');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const { validateEmail, validatePassword } = require('../util/validation');
 
 // render handling methods
 const handleSignup = async (req, res) => {
    try {
-      const { username, password, role } = req.body;
+      const { username, password, role = "user" } = req.body;
+
+      // Validate email and password
+      const emailError = validateEmail(username);
+      const passwordError = validatePassword(password);
+
+      if (emailError || passwordError) {
+         return res.status(400).json({
+            message: 'Validation failed',
+            errors: { username: emailError, password: passwordError }
+         });
+      }
 
       // check whether user already exists
       const user = await User.findOne({ username });
@@ -15,7 +27,6 @@ const handleSignup = async (req, res) => {
       }
 
       // create new user & save to db
-      (role === null) && (role = "user");
       const newUser = new User({ username, password, role });
       await newUser.save();
 
@@ -27,6 +38,9 @@ const handleSignup = async (req, res) => {
          user: { username: newUser.username, role: newUser.role }
       });
    } catch (err) {
+      if (err.message === "User validation failed: role: `other` is not a valid enum value for path `role`.") {
+         return res.status(400).json({ message: "Invalid role." });
+      }
       res.status(500).json({ error: err.message });
    }
 }
