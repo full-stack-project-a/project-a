@@ -76,3 +76,52 @@ Expected Outcome: error 400, validation failed
 ```
 
 Expected Outcome: error 400, validation failed
+
+
+
+# Signin 
+Method: POST
+URL: http://localhost:3000/api/auth/signin
+
+## Successful Signin
+```json
+{
+  "username": "existinguser@email.com",
+  "password": "correctpasswordA1"
+}
+```
+Expected Outcome: Status code 200, a success message, and a JWT token in the response.
+
+## Signin with Incorrect Password
+```json
+{
+  "username": "existinguser@email.com",
+  "password": "incorrectpassword"
+}
+```
+Expected Outcome: Status code 401 (unauthorized) and an error message indicating invalid username or password.
+
+## Signin with Non-Existent Username
+```json
+{
+  "username": "nonexistentuser@email.com",
+  "password": "anyPassword"
+}
+```
+Expected Outcome: Status code 401 (unauthorized) and an error message indicating invalid username or password.
+
+## Signin with Missing Username
+```json
+{
+  "password": "password123"
+}
+```
+Expected Outcome: Status code 401 (unauthorized).
+
+## Signin with Missing Password
+```json
+{
+  "username": "existentuser@email.com"
+}
+```
+Expected Outcome: Status code 401 (unauthorized).

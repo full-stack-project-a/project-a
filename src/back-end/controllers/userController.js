@@ -48,22 +48,26 @@ const handleSignup = async (req, res) => {
 const handleSignin = async (req, res) => {
    try {
       const { username, password } = req.body;
-      // validate user credential (username & password)
-      const user = await User.findOne({ username });
-      const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-      if (!user || (user.password !== hashedPassword)) {
+      if (username && password) {
+         // validate user credential (username & password)
+         const user = await User.findOne({ username });
+         const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
+         if (!user || (user.password !== hashedPassword)) {
+            return res.status(401).json({ message: "Invalid username or password" });
+         }
+
+         // generate JWT token as proof of auth
+         const token = generateToken(user);
+
+         // resolve & send response
+         res.json({
+            message: 'Authentication success',
+            token: token,
+            user: { username: user.username, role: user.role }
+         })
+      } else {
          return res.status(401).json({ message: "Invalid username or password" });
       }
-
-      // generate JWT token as proof of auth
-      const token = generateToken(user);
-
-      // resolve & send response
-      res.json({
-         message: 'Authentication success',
-         token: token,
-         user: { username: user.username, role: user.role }
-      })
    } catch (err) {
       res.status(500).json({ error: err.message });
    }
