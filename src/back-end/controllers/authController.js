@@ -7,6 +7,7 @@ const { validateEmail, validatePassword } = require('../util/validation');
 // render handling methods
 const handleSignup = async (req, res) => {
    try {
+      console.log("req:", req);
       const { username, password, role = "customer" } = req.body;
 
       // Validate email and password

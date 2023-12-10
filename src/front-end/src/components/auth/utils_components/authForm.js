@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useAppContext } from "../../../context/AppContext";
+import axios from 'axios';
 import styles from "../../../styles/auth/auth_form.module.css";
 import { validateEmail, validatePassword } from "../../../utils/auth/validation";
 
-const AuthForm = ({ currPage, onEmailSent }) => {
+const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
+   const navigate = useNavigate();
+   const { setAuth } = useAppContext();
+
    // State to store email and password
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
@@ -38,15 +44,54 @@ const AuthForm = ({ currPage, onEmailSent }) => {
       (currPage !== "signin") && setPasswordError(validatePassword(password));
    }, [password]);
 
+   const updateAuthAndStore = (userData) => {
+      setAuth({ isAuthenticated: true, user: userData.user, token: userData.token });
+      localStorage.setItem('auth', JSON.stringify({
+         isAuthenticated: true,
+         user: userData.user,
+         token: userData.token
+      }));
+   };
+
    // Form submission handler
-   const handleSubmit = (event) => {
+   const handleSubmit = async (event) => {
       event.preventDefault();
       switch (currPage) {
          case "signup":
             if (emailError || passwordError) {
                alert("Error in email or password, please try again!");
+            } else {
+               try {
+                  const response = await axios.post('/api/auth/signup', {
+                     username: email,
+                     password: password,
+                     role: isVendor ? 'vendor' : 'customer'
+                  });
+                  // success, save user to context & close window
+                  updateAuthAndStore(response.data);
+                  navigate(-1);
+               } catch (error) {
+                  console.error('Signup error:', error.response.data);
+                  alert(error);
+               }
             }
             break;
+
+         case "signin":
+            try {
+               const response = await axios.post('/api/auth/signin', {
+                  username: email,
+                  password: password
+               });
+               // success, save user to context & navigate
+               updateAuthAndStore(response.data);
+               navigate(-1);
+            } catch (error) {
+               console.error('Signin error:', error.response ? error.response.data : error);
+               alert("Signin error: " + (error.response ? error.response.data.message : error));
+            }
+            break;
+
          case "updatePassword":
             if (!emailError) {
                // If email is valid, trigger the email sent action
@@ -55,6 +100,7 @@ const AuthForm = ({ currPage, onEmailSent }) => {
                alert("Please enter a valid email!");
             }
             break;
+
          default:
             // Default action for other pages...
             break;
