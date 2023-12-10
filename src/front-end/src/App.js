@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -9,6 +9,8 @@ import AuthComponent from './components/auth/AuthComponent';
 import ProductPage from './components/product/ProductPage';
 import DetailPage from './components/product/DetailPage';
 import Formtable from './components/product/Formtable';
+import Checkout from './components/checkout/Checkout';
+import ErrorPage from './components/error/ErrorPage';
 // import Formtable from './components/product/Formtable';
 // import ProductPage from './components/product/ProductPage';
 // import ProductCard from './components/product/CardStyle';
@@ -29,6 +31,8 @@ function App() {
                      <Route path="/products" element={<ProductPage />} />
                      <Route path="/products/1" element={<DetailPage />} />
                      <Route path="/products/new" element={<Formtable />} />
+                     <Route path="/checkout" element={<Checkout />} />
+                     <Route path="/error" element={<ErrorPage />} />
                      {/* Add more routes as needed */}
                   </Routes>
                </div>
