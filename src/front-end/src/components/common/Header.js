@@ -44,8 +44,8 @@ const Header = () => {
 
             </div>
             <div className='search-bar'>
-               <input type="text" class="searchText" placeholder="search" />
-               <button type="submit" class="searchButton">
+               <input type="text" className="searchText" placeholder="search" />
+               <button type="submit" className="searchButton">
                   <CiSearch className='searchIcon' />
                </button>
             </div>
