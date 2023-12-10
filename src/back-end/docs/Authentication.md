@@ -21,7 +21,7 @@
 {
   "username": "newuser",
   "password": "newpassword",
-  "role": "user"
+  "role": "customer"
 }
 ```
 

@@ -1,6 +1,6 @@
 const { User } = require("../models/userSchema");
 
-// return 403 if "user"
+// return 403 if "customer"
 // return 401 if not logged in or no user
 // return 500 for server error
 // pass to next middleware of "vendor"
