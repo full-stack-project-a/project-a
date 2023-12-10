@@ -21,9 +21,12 @@ const Header = () => {
 
    const handleProfileClick = () => {
       if (auth.isAuthenticated) {
-         setAuth({ isAuthenticated: false, user: null, token: null });
-         localStorage.removeItem('auth');
-         // other sign-out logic goes here
+         const confirmSignOut = window.confirm("Are you sure you want to sign out?");
+         if (confirmSignOut) {
+            setAuth({ isAuthenticated: false, user: null, token: null });
+            localStorage.removeItem('auth');
+            // add other sign-out logic
+         }
       } else {
          navigate('/signin');
       }
