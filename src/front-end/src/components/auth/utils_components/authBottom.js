@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "../../../styles/auth/auth_bottom.module.css";
 
-const AuthBottom = ({ currPage }) => {
+const AuthBottom = ({ currPage, isVendor, handleCheckboxChange }) => {
    const navigate = useNavigate();
-   const [isVendor, setIsVendor] = useState(false);
 
    const navigateAndReplace = (path) => {
       navigate(path, { replace: true });
-   };
-
-   const handleCheckboxChange = () => {
-      setIsVendor(!isVendor);
    };
 
    return (

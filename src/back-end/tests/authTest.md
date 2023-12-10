@@ -21,7 +21,7 @@ Expected Outcome: Status code 201, a success message, and a JWT token in the res
   "token": "...",
   "user": {
     "username": "newuser",
-    "role": "user"
+    "role": "customer"
   }
 }
 ```
@@ -32,7 +32,7 @@ Expected Outcome: Status code 201, a success message, and a JWT token in the res
 {
   "username": "newuser",
   "password": "newpassword",
-  "role": "user"
+  "role": "customer"
 }
 ```
 
@@ -48,7 +48,7 @@ Expected Outcome: Status code 400 and an error message indicating the user alrea
 ```json
 {
   "password": "password123",
-  "role": "user"
+  "role": "customer"
 }
 ```
 
@@ -59,7 +59,7 @@ Expected Outcome: error 400, validation failed
 ```json
 {
   "username": "newuser",
-  "role": "user"
+  "role": "customer"
 }
 ```
 
