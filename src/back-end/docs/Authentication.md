@@ -4,7 +4,7 @@
 - **User Model (MongoDB)**: 
   - `username`: String, required
   - `password`: String, required, hashed (sha256)
-  - `role`: String, default to 'user', can be 'admin' or 'user'
+  - `role`: String, default to 'user', can be 'vendor' or 'user'
 
 ## Authentication Flow
 
@@ -58,10 +58,8 @@
 - **Backend**: Validate inputs against MongoDB, ensure security measures.
 
 ## Security Considerations
-- Use HTTPS for data protection.
-- Implement rate limiting for security.
-- Use bcryptjs for password hashing.
-- Ensure secure MongoDB connection.
+- Use JWT for data transfering.
+- Use SHA for password hashing.
 
 ## Logout Flow
 - **Frontend**: Clear JWT token from local storage.
@@ -69,9 +67,6 @@
 
 ## API Error Handling
 - Return appropriate error messages and HTTP status codes.
-
-## Responsive Design
-- Ensure APIs handle requests efficiently from various devices.
 
 ## Testing
 - Write tests for API authentication and authorization with MongoDB integration.
