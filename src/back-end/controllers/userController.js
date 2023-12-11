@@ -1,10 +1,33 @@
 const { User } = require("../models/userSchema");
 
-// return 403 if "customer"
-// return 401 if not logged in or no user
-// return 500 for server error
-// pass to next middleware of "vendor"
-const checkVendorRole = async (req, res, next) => {
+/**
+ * Middleware to verify user's role and provide role-based access control.
+ * 
+ * @param {String} requiredRole - The role required to access the route ('public', 'authenticated', 'vendor').
+ * 
+ * Functionality:
+ * - Returns a 400 error if an invalid role is specified.
+ * - Allows public access without authentication if requiredRole is 'public'.
+ * - For 'authenticated' and 'vendor' roles, checks if the user is logged in.
+ * - If the user is logged in, further checks if their role matches the requiredRole.
+ * - If the user's role does not match, or if no user is found, returns a 403 (Forbidden) or 401 (Unauthorized) error.
+ * - If the user has the required role, proceeds to the next middleware.
+ * 
+ * Note: This middleware assumes that req.user is populated by previous authentication middleware.
+ */
+const verifyTokenAndRole = (requiredRole) => async (req, res, next) => {
+   console.log("req: ", req);
+   // Validate requiredRole parameter
+   if (!['public', 'authenticated', 'vendor'].includes(requiredRole)) {
+      return res.status(400).json({ message: "Bad Request: Invalid role specified" });
+   }
+
+   // Public access doesn't require authentication
+   if (requiredRole === 'public') {
+      return next();
+   }
+
+   // Check if user is logged in for authenticated access
    if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Unauthorized: User is not logged in." });
    }
@@ -13,25 +36,25 @@ const checkVendorRole = async (req, res, next) => {
       const userId = req.user.id;
       const user = await User.findById(userId);
 
+      // Ensure the user exists
       if (!user) {
          return res.status(401).json({ message: "Unauthorized: User not found" });
       }
 
-      switch (user.role) {
-         case "vendor":
-            next();
-            break;
-         case "customer":
-            return res.status(403).json({ message: "Forbidden: You don't have permission to create a product." });
-         default:
-            // Handle unexpected roles
-            return res.status(403).json({ message: "Forbidden: Invalid user role." });
+      // Verify user's role for vendor and authenticated routes
+      if ((requiredRole === 'vendor' && user.role !== 'vendor') ||
+         (requiredRole === 'authenticated' && !['customer', 'vendor'].includes(user.role))) {
+         return res.status(403).json({ message: "Forbidden: Insufficient permissions." });
       }
+
+      // User has the required role
+      next();
    } catch (err) {
-      return res.status(500).json({ message: `${err.message}` });
+      return res.status(500).json({ message: `Internal Server Error: ${err.message}` });
    }
 };
 
+
 module.exports = {
-   checkVendorRole
+   verifyTokenAndRole
 }
