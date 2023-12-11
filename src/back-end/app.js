@@ -11,6 +11,9 @@ var usersRouter = require('./routes/users');
 const productRouter = require('./routes/products');
 const bodyParser = require('body-parser');
 
+var cartRouter = require('./routes/cart');
+var orderRouter = require('./routes/order');
+
 var app = express();
 const mongoose = require('mongoose');
 MONGODB_URL = process.env.MONGODB_URL;
@@ -29,5 +32,9 @@ app.use('/api/', usersRouter);
 // /api/v1/products
 app.use(bodyParser.json());
 app.use('/api/v1/products', productRouter);
+// /api/v1/cart
+app.use('/api/v1/cart', cartRouter);
+// /api/v1/order
+app.use('/api/v1/order', orderRouter);
 
 module.exports = app;

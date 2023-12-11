@@ -23,7 +23,14 @@ const ErrorPage = () => {
                 </Typography>
                 <Button
                     variant="contained"
-                    sx={{ mt: 3, mb: 2, bgcolor: '#5048E5', '&:hover': '#5048E5' }}
+                    sx={{
+                        mt: 3,
+                        mb: 2,
+                        bgcolor: '#5048E5',
+                        '&:hover': {
+                            bgcolor: '#5048E5',
+                        },
+                    }}
                     onClick={() => navigate('/products')}
                 >
                     Go Home
