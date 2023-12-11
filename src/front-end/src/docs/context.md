@@ -5,7 +5,7 @@
 
 ## AppProvider Component
 
-### States
+### Auth State
 - `auth`: An object that holds the authentication state. It has the following structure:
   - `isAuthenticated`: A boolean indicating if the user is authenticated.
   - `user`: The user object, or `null` if not authenticated.

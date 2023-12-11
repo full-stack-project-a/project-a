@@ -7,7 +7,7 @@ import { validateEmail, validatePassword } from "../../../utils/auth/validation"
 
 const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
    const navigate = useNavigate();
-   const { setAuth } = useAppContext();
+   const { setAuth, setIsLoading } = useAppContext();
 
    // State to store email and password
    const [email, setEmail] = useState('');
@@ -44,6 +44,7 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
       (currPage !== "signin") && setPasswordError(validatePassword(password));
    }, [password]);
 
+   // utility function: update local auth storage
    const updateAuthAndStore = (userData) => {
       setAuth({ isAuthenticated: true, user: userData.user, token: userData.token });
       localStorage.setItem('auth', JSON.stringify({
@@ -58,6 +59,7 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
       event.preventDefault();
       switch (currPage) {
          case "signup":
+            setIsLoading(true);
             if (emailError || passwordError) {
                alert("Error in email or password, please try again!");
             } else {
@@ -73,11 +75,14 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
                } catch (error) {
                   console.error('Signup error:', error.response.data);
                   alert(error);
+               } finally {
+                  setIsLoading(false);
                }
             }
             break;
 
          case "signin":
+            setIsLoading(true);
             try {
                const response = await axios.post('/api/auth/signin', {
                   username: email,
@@ -89,6 +94,8 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
             } catch (error) {
                console.error('Signin error:', error.response ? error.response.data : error);
                alert("Signin error: " + (error.response ? error.response.data.message : error));
+            } finally {
+               setIsLoading(false);
             }
             break;
 
@@ -102,7 +109,6 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
             break;
 
          default:
-            // Default action for other pages...
             break;
       }
    };
