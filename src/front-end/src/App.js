@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
 import { AppProvider, useAppContext } from './context/AppContext';
@@ -16,7 +16,8 @@ import Formtable from './components/product/Formtable';
 
 
 const AppContent = () => {
-   const { isLoading } = useAppContext();
+   const { isLoading, auth } = useAppContext();
+   const isVendor = auth.isAuthenticated && auth.user && auth.user.role === 'vendor';
 
    return (
       <>
@@ -30,13 +31,18 @@ const AppContent = () => {
                   <Route path="/updatePassword" element={<AuthComponent currPage="updatePassword" />} />
                   <Route path="/products" element={<ProductPage />} />
                   <Route path="/products/1" element={<DetailPage />} />
-                  <Route path="/products/new" element={<Formtable />} />
+                  {/* <Route path="/products/new" element={<Formtable />} /> */}
+                  {/* Conditional rendering for protected route */}
+                  <Route path="/products/new" element={
+                     isVendor ? <Formtable /> : <Navigate to="/" replace />
+                  } />
+
                   {/* Add more routes as needed */}
                </Routes>
             </div>
             <Footer />
          </div>
-         {isLoading && <LoadingScreen />} 
+         {isLoading && <LoadingScreen />}
       </>
    );
 };

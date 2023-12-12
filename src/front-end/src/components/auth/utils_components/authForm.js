@@ -7,7 +7,7 @@ import { validateEmail, validatePassword } from "../../../utils/auth/validation"
 
 const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
    const navigate = useNavigate();
-   const { setAuth, setIsLoading } = useAppContext();
+   const { auth, setAuth, setIsLoading } = useAppContext();
 
    // State to store email and password
    const [email, setEmail] = useState('');
@@ -100,11 +100,30 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
             break;
 
          case "updatePassword":
-            if (!emailError) {
-               // If email is valid, trigger the email sent action
-               onEmailSent();
+            if (email) {
+               try {
+                  const response = await axios.post('/api/auth/updatePassword', {
+                     email: email,
+                  }, {
+                     headers: {
+                        Authorization: `Bearer ${auth.token}`
+                     }
+                  });
+
+                  if (response.status === 200) {
+                     onEmailSent();
+                  } else {
+                     // Handle different types of errors as needed
+                     console.error('Error:', response);
+                     alert("Error in updating password");
+                  }
+               } catch (error) {
+                  let errorMessage = error?.response?.data?.message;
+                  console.error('Request error:', errorMessage);
+                  alert("Request failed: " + errorMessage);
+               }
             } else {
-               alert("Please enter a valid email!");
+               alert("Please type in an email...");
             }
             break;
 
