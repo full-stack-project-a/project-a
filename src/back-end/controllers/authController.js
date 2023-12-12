@@ -76,8 +76,8 @@ const handleSignin = async (req, res) => {
 
 const handleUpdatePassword = async (req, res) => {
    try {
-      const { username } = req.body;
-      const user = await User.findOne({ username });
+      const { email } = req.body;
+      const user = await User.findOne({ username: email });
       if (!user) {
          return res.status(404).json({ message: "User not found" });
       }
