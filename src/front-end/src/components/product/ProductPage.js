@@ -74,7 +74,13 @@ const ProductPage = () => {
                     {range(1, 10).map((product) => (
                         <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product}>
                             <Box>
-                                <ProductCard/>
+                                <ProductCard
+                                    product={{
+                                        name: "iPhone 13 Pro Max",
+                                        price: "1000",
+                                        imageUrl: 'https://source.unsplash.com/random'
+                                    }} 
+                                />
                             </Box>    
                         </Grid>
                     ))}
