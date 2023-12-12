@@ -9,15 +9,20 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 const AuthComponent = ({ children, currPage = "signin" }) => {
    const [isEmailSent, setIsEmailSent] = useState(false);
+   const [isVendor, setIsVendor] = useState(false);
    const navigate = useNavigate();
 
    const onClose = () => {
       navigate(-1); // Navigate back to the previous page
    };
 
-   // Function to handle sending email (to be triggered on form submission)
+   // Function to handle sending email
    const handleEmailSent = () => {
       setIsEmailSent(true);
+   };
+
+   const handleCheckboxChange = () => {
+      setIsVendor(!isVendor);
    };
 
    return (
@@ -30,8 +35,8 @@ const AuthComponent = ({ children, currPage = "signin" }) => {
             {!isEmailSent && (
                <>
                   <AuthHeading currPage={currPage} />
-                  <AuthForm currPage={currPage} onEmailSent={handleEmailSent} />
-                  <AuthBottom currPage={currPage} />
+                  <AuthForm currPage={currPage} onEmailSent={handleEmailSent} isVendor={isVendor} />
+                  <AuthBottom currPage={currPage} isVendor={isVendor} handleCheckboxChange={handleCheckboxChange} />
                </>
             )}
             {isEmailSent && <AuthEmailSent />}

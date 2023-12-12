@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "../../../styles/auth/auth_bottom.module.css";
 
-const AuthBottom = ({ currPage }) => {
+const AuthBottom = ({ currPage, isVendor, handleCheckboxChange }) => {
    const navigate = useNavigate();
 
    const navigateAndReplace = (path) => {
@@ -24,10 +24,20 @@ const AuthBottom = ({ currPage }) => {
          )}
 
          {currPage === 'signup' && (
-            <p className={styles.bottomGroupText}>
-               Already have an account?{" "}
-               <span className={styles.link} onClick={() => navigateAndReplace('/signin')}>Sign in</span>
-            </p>
+            <>
+               <p className={styles.bottomGroupText}>
+                  Already have an account?{" "}
+                  <span className={styles.link} onClick={() => navigateAndReplace('/signin')}>Sign in</span>
+               </p>
+               <div className={styles.vendorBox}>
+                  <input
+                     type="checkbox"
+                     checked={isVendor}
+                     onChange={handleCheckboxChange}
+                  />
+                  <label>vendor?</label>
+               </div>
+            </>
          )}
 
          {/* No content for update password page */}

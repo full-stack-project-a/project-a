@@ -82,7 +82,21 @@ Document:
 ```
 ### Authorization
 * Required
-* Type: TBD
+* Type: Middleware
+* Method Name: `checkVendorRole`
+
+**Usage**:
+```javascript
+app.post('/api/v1/products', checkVendorRole, productCreationHandler);
+```
+
+**Response**:
+- Success: If the user has the role of 'vendor', request to proceed to the next handler `next()`
+- Client Error/fail: 
+  - role of 'customer' or unexpected roles: returns a `403 Forbidden`
+  - user role is not recognized or is missing: returns a `401 Forbidden`
+- Server Error: `500 Internal Server Error`.
+
 ### Response
 * Status Code: 200 (OK)
 ```json

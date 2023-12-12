@@ -29,3 +29,25 @@
    cursor: pointer;
    font-size: 15px;
 }
+
+.vendorBox {
+   display: flex;
+   justify-content: center;
+   margin-top: 5px;
+}
+
+.vendorBox input[type="checkbox"] {
+   margin-right: 5px;
+}
+
+.vendorBox label {
+   color: var(--auth-option-gray);
+   font-size: 15px;
+}
+
+/* Adjustments for mobile view */
+@media screen and (max-width: 600px) {
+   .vendorBox {
+      justify-content: center;
+   }
+}

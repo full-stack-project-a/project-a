@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAppContext } from '../../context/AppContext';
 import '../../styles/main/header.css';
 import '../../styles/main/global.css';
 import CartModel from '../cart/CartModal'
@@ -9,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
-
+   const { auth, setAuth } = useAppContext();
    const [showCartModal, setShowCartModal] = useState(false);
 
    const toggleCartModal = () => {
@@ -18,8 +19,17 @@ const Header = () => {
 
    const navigate = useNavigate();
 
-   const handleSignInClick = () => {
-      navigate('/signin');
+   const handleProfileClick = () => {
+      if (auth.isAuthenticated) {
+         const confirmSignOut = window.confirm("Are you sure you want to sign out?");
+         if (confirmSignOut) {
+            setAuth({ isAuthenticated: false, user: null, token: null });
+            localStorage.removeItem('auth');
+            // add other sign-out logic
+         }
+      } else {
+         navigate('/signin');
+      }
    };
 
    return (
@@ -41,12 +51,12 @@ const Header = () => {
             </div>
 
             <div className='profile-cart-container'>
-               <div className='profile-container' onClick={handleSignInClick}>
+               <div className='profile-container' onClick={handleProfileClick}>
                   <div className='profile-icons'>
                      <GoPerson className='profile-person-icon' />
                      <FaStar className='profile-star-icon' />
                   </div>
-                  <p>Sign in</p>
+                  <p>{auth.isAuthenticated ? "Sign out" : "Sign in"}</p>
                </div>
                <div className='cart-container' onClick={toggleCartModal}>
                   <FaCartArrowDown className='cart-icon' />
