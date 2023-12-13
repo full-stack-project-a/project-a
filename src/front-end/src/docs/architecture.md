@@ -17,7 +17,9 @@ Below is the directory structure of our project, highlighting the main folders a
         - `auth/`: Components related to authentication.
         - `common/`: Common components used in multiple places.
         - `products/`: Components specific to product features.
-        - `other/`: Other miscellaneous components.
+        - `checkout/`: Components specific to checkout features.
+        - `cart/`: Components specific to cart features.
+        - `error/`: Components specific to handle error.
     - `pages/`: Contains the page components.
         - `auth/`: Pages related to authentication (login, sign-up, etc.).
         - `home/`: The home page of the application.
