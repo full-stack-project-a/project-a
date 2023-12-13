@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const CartItem = require('./cartItem');
+const Product = require('./product'); // Import the Product schema
 
 const shoppingCartSchema = new Schema({
     user: {
@@ -8,9 +8,38 @@ const shoppingCartSchema = new Schema({
         ref: 'User',
         required: true
     },
-    items: [CartItem.schema]
-},
-{
+    items: [{
+        product: {
+            type: Schema.Types.ObjectId,
+            ref: 'Product', // Reference to the Product schema
+            required: true
+        },
+        quantity: {
+            type: Number,
+            default: 1 // Default quantity if not specified
+        }
+    }],
+    totalItems: {
+        type: Number,
+        default: 0,
+    },
+    cartTotalAmount: {
+        type: Number,
+        default: 0.0,
+    },
+    tax: {
+        type: Number,
+        default: 0.0,
+    },
+    discount: {
+        type: Number,
+        default: 0.0,
+    },
+    estimatedTotal: {
+        type: Number,
+        default: 0.0,
+    },
+}, {
     timestamps: true
 });
 
