@@ -7,7 +7,7 @@ import { validateEmail, validatePassword } from "../../../utils/auth/validation"
 
 const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
    const navigate = useNavigate();
-   const { setAuth } = useAppContext();
+   const { auth, setAuth, setIsLoading } = useAppContext();
 
    // State to store email and password
    const [email, setEmail] = useState('');
@@ -44,6 +44,7 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
       (currPage !== "signin") && setPasswordError(validatePassword(password));
    }, [password]);
 
+   // utility function: update local auth storage
    const updateAuthAndStore = (userData) => {
       setAuth({ isAuthenticated: true, user: userData.user, token: userData.token });
       localStorage.setItem('auth', JSON.stringify({
@@ -58,6 +59,7 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
       event.preventDefault();
       switch (currPage) {
          case "signup":
+            setIsLoading(true);
             if (emailError || passwordError) {
                alert("Error in email or password, please try again!");
             } else {
@@ -73,11 +75,14 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
                } catch (error) {
                   console.error('Signup error:', error.response.data);
                   alert(error);
+               } finally {
+                  setIsLoading(false);
                }
             }
             break;
 
          case "signin":
+            setIsLoading(true);
             try {
                const response = await axios.post('/api/auth/signin', {
                   username: email,
@@ -89,20 +94,40 @@ const AuthForm = ({ currPage, onEmailSent, isVendor }) => {
             } catch (error) {
                console.error('Signin error:', error.response ? error.response.data : error);
                alert("Signin error: " + (error.response ? error.response.data.message : error));
+            } finally {
+               setIsLoading(false);
             }
             break;
 
          case "updatePassword":
-            if (!emailError) {
-               // If email is valid, trigger the email sent action
-               onEmailSent();
+            if (email) {
+               try {
+                  const response = await axios.post('/api/auth/updatePassword', {
+                     email: email,
+                  }, {
+                     headers: {
+                        Authorization: `Bearer ${auth.token}`
+                     }
+                  });
+
+                  if (response.status === 200) {
+                     onEmailSent();
+                  } else {
+                     // Handle different types of errors as needed
+                     console.error('Error:', response);
+                     alert("Error in updating password");
+                  }
+               } catch (error) {
+                  let errorMessage = error?.response?.data?.message;
+                  console.error('Request error:', errorMessage);
+                  alert("Request failed: " + errorMessage);
+               }
             } else {
-               alert("Please enter a valid email!");
+               alert("Please type in an email...");
             }
             break;
 
          default:
-            // Default action for other pages...
             break;
       }
    };

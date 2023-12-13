@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Box, Button, Typography, TextField, Grid, Select, MenuItem,  useMediaQuery, useTheme, Paper, IconButton } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 const Formtable = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const urlRegex = /^(http|https):\/\/[^ "]+$/;
+    const [isUrlValid, setIsUrlValid] = useState(true);
+    
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        category: 'All',
+        price: '',
+        inStockQuantity: '',
+        imageUrl: ''
+    });
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const handleUrlChange = (event) => {
+        setIsUrlValid(urlRegex.test(event.target.value));
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formData);
+        try {
+            // http://127.0.0.1:8000/api/v1/products
+            const response = await axios.post('API_ENDPOINT', formData);
+            console.log(response.data);
+            // 处理成功的响应
+        } catch (error) {
+            console.error('There was an error!', error);
+            // 处理错误
+        }
+    };
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             
             <Box style={{ margin: '0 auto', maxWidth: '80%', marginTop:'20px', marginBottom: '20px' }}>
                 <Typography variant='h4' align={isMobile? 'center': 'left'}>
@@ -39,14 +71,18 @@ const Formtable = () => {
                     }}>
                         <Grid item xs={12} md={12}>
                             <span style={{display: 'flex', alignItems: 'center'}}> Product Name </span>
-                            <TextField required id="productName" name="productName"  fullWidth />
+                            <TextField required id="productName" name="name"  
+                            onChange={handleInputChange}
+                            fullWidth 
+                            />
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <span style={{display: 'flex', alignItems: 'center'}}> Product Description </span>
-                            <TextField required id="productDescription" name="productDescription" 
+                            <TextField required id="productDescription" name="description" 
                                 multiline
                                 rows={4}
-                                fullWidth 
+                                fullWidth
+                                onChange={handleInputChange} 
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -55,6 +91,7 @@ const Formtable = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
+                                onChange={handleInputChange}
                                 fullWidth
                                 defaultValue="All"
                             >
@@ -66,17 +103,25 @@ const Formtable = () => {
                         <Grid item xs={12} md={6}>
                             {/* price */}
                             <span style={{display: 'flex', alignItems: 'center'}}> Price </span>
-                            <TextField required id="productPrice" name="productPrice" fullWidth />
+                            <TextField required id="productPrice" name="price" 
+                            onChange={handleInputChange}
+                            type='number'
+                            fullWidth />
                         </Grid>
                         <Grid item xs={12} md={4}>
                             {/* in store quantity */}
                             <span style={{display: 'flex', alignItems: 'center'}}> In Store Quantity </span>
-                            <TextField required id="productQuantity" name="productQuantity"  fullWidth />
+                            <TextField required id="productQuantity" name="inStockQuantity"  
+                            onChange={handleInputChange}
+                            fullWidth />
                         </Grid>
                         <Grid item xs={12} md={8}>
                             {/* image url */}
                             <span style={{display: 'flex', alignItems: 'center'}}> Add Image Link </span>
-                            <TextField required id="productImage" name="productImage" defaultValue="http://" fullWidth
+                            <TextField required id="productImage" name="imageUrl" defaultValue="http://" fullWidth
+                                error={!isUrlValid}
+                                // helperText={!isUrlValid ? 'Please enter a valid URL' : ''}
+                                onChange={handleUrlChange}
                                 InputProps={{
                                     endAdornment:(
                                         <Button variant="contained" color="primary" size="large" style={{
@@ -85,24 +130,24 @@ const Formtable = () => {
                                             Upload
                                         </Button>
                                     ),
-                                }}       
+                                }}
+
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>
-                        <Box
-                            sx={{
-                                width: '80%',
-                                margin: 'auto',
-                                border: '5px dashed grey',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: '30px',
-                                gap: '10px'
-                            }}
-                            >
-                                
+                            <Box
+                                sx={{
+                                    width: '80%',
+                                    margin: 'auto',
+                                    border: '5px dashed grey',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '30px',
+                                    gap: '10px'
+                                }}
+                                > 
                             <IconButton color="primary" aria-label="upload picture" component="label">
                                 <input hidden accept="image/*" type="file" />
                                 <InsertPhotoIcon fontSize="large" />
@@ -118,7 +163,7 @@ const Formtable = () => {
                             
                             }}
                         >
-                            <Button variant="contained" color="primary" size="large" style={{
+                            <Button type='submit' variant="contained" color="primary" size="large" style={{
                                 backgroundColor: '#5048E5',
                             }}
                             >
@@ -128,7 +173,7 @@ const Formtable = () => {
                     </Grid>
                 </Paper>
             </Box>
-        </div>
+        </form>
     );
 }
 export default Formtable;

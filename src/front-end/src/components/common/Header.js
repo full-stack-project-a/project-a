@@ -25,6 +25,7 @@ const Header = () => {
          if (confirmSignOut) {
             setAuth({ isAuthenticated: false, user: null, token: null });
             localStorage.removeItem('auth');
+            navigate("");
             // add other sign-out logic
          }
       } else {

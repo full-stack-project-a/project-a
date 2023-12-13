@@ -33,7 +33,40 @@ Document:
 ```
 ### Authorization
 * Required
-* Type: TBD
+* Type: Middleware
+* Method Name: `verifyTokenAndRole`
+* Provides role-based access control
+
+**Parameters**:
+- `requiredRole`: A string specifying the role required to access the route. It can be one of the following:
+  - `vendor`: Only users with the 'vendor' role can access the route.
+  - `authenticated`: Any authenticated user (both 'customer' and 'vendor') can access.
+  - `public`: The route is accessible to everyone, including unauthenticated users.
+
+**Usage**:
+To protect a route so that only vendors can access it:
+```javascript
+app.post('/some-vendor-route', verifyTokenAndRole('vendor'), vendorRouteHandler);
+```
+
+For routes accessible to any authenticated user:
+```javascript
+app.get('/some-authenticated-route', verifyTokenAndRole('authenticated'), authenticatedRouteHandler);
+```
+
+For public routes:
+```javascript
+app.get('/some-public-route', verifyTokenAndRole('public'), publicRouteHandler);
+```
+
+**Response**:
+- Success: The request proceeds to the next handler `next()` if the user's role matches the requiredRole.
+- Client Error/fail: 
+  - `requiredRole` not valid: returns a `400 Bad Request`
+  - User is not found/valid for authenticated or vendor: returns `401 Unauthorized`
+  - requiredRole is vendor but user is not vendor: `403 Unauthorized`
+- Server Error: `500 Internal Server Error`.
+
 
 ### Response
 * Status Code: 201 (Created)
@@ -83,18 +116,37 @@ Document:
 ### Authorization
 * Required
 * Type: Middleware
-* Method Name: `checkVendorRole`
+* Method Name: `verifyTokenAndRole`
+* Provides role-based access control
+
+**Parameters**:
+- `requiredRole`: A string specifying the role required to access the route. It can be one of the following:
+  - `vendor`: Only users with the 'vendor' role can access the route.
+  - `authenticated`: Any authenticated user (both 'customer' and 'vendor') can access.
+  - `public`: The route is accessible to everyone, including unauthenticated users.
 
 **Usage**:
+To protect a route so that only vendors can access it:
 ```javascript
-app.post('/api/v1/products', checkVendorRole, productCreationHandler);
+app.post('/some-vendor-route', verifyTokenAndRole('vendor'), vendorRouteHandler);
+```
+
+For routes accessible to any authenticated user:
+```javascript
+app.get('/some-authenticated-route', verifyTokenAndRole('authenticated'), authenticatedRouteHandler);
+```
+
+For public routes:
+```javascript
+app.get('/some-public-route', verifyTokenAndRole('public'), publicRouteHandler);
 ```
 
 **Response**:
-- Success: If the user has the role of 'vendor', request to proceed to the next handler `next()`
+- Success: The request proceeds to the next handler `next()` if the user's role matches the requiredRole.
 - Client Error/fail: 
-  - role of 'customer' or unexpected roles: returns a `403 Forbidden`
-  - user role is not recognized or is missing: returns a `401 Forbidden`
+  - `requiredRole` not valid: returns a `400 Bad Request`
+  - User is not found/valid for authenticated or vendor: returns `401 Unauthorized`
+  - requiredRole is vendor but user is not vendor: `403 Unauthorized`
 - Server Error: `500 Internal Server Error`.
 
 ### Response

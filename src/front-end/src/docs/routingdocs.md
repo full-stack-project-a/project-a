@@ -70,6 +70,28 @@ This document provides detailed descriptions of the front-end routes in the shop
 - **Description:** Displays an error page for various application errors.
 - **Functionality:** Presents an error message and provides a button to return to the home page.
 
+# Frontend Routing Protection
+## Overview
+The `App.js` file in the application uses React Router for protecting certain routes based on user authentication and role.
+
+## Key Components
+- `AppProvider`: Provides the application context, including authentication state.
+- `useAppContext`: Hook used to access the application context, particularly for authentication (`auth`) and loading state (`isLoading`).
+- `isVendor`: A derived state indicating if the logged-in user is a vendor.
+
+## Route Protection
+- **Protected Route**: The route `/products/new` is protected. It is accessible only to users with the role of 'vendor'. 
+    - if user doesn't meet requirement, they will be redirected to route `/`
+
+## Implementation
+
+```jsx
+// Conditional rendering within the Routes component
+<Route path="/products/new" element={
+   isVendor ? <Formtable /> : <Navigate to="/" replace />
+} />
+```
+
 ## Appendix
 
 - **Version:** 1.0

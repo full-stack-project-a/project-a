@@ -198,6 +198,46 @@ This document provides an overview of the components used in the project, detail
 ```jsx
 <AuthEmailSent />
 ```
+
 - used by `AuthComponent`
 
 ---
+
+## LoadingScreen
+
+### Purpose
+
+`LoadingScreen` is used to indicate ongoing async operations like API calls, displaying a full-page overlay with a spinning indicator.
+
+### Props
+
+None.
+
+### State
+
+None. It relies on `isLoading` from `AppContext`.
+
+### Usage Example
+
+Used in conjunction with `AppContext` to manage visibility during operations like signing up or signing in.
+
+**In a Component:**
+
+```jsx
+import { useAppContext } from "../../../context/AppContext";
+
+const MyComponent = () => {
+  const { setIsLoading } = useAppContext();
+
+  const handleOperation = async () => {
+    setIsLoading(true);
+    try {
+      // Perform async operation
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Component logic
+};
+```

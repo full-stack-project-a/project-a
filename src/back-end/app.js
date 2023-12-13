@@ -3,7 +3,6 @@ require('dotenv').config();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,11 +14,12 @@ var cartRouter = require('./routes/cart');
 var orderRouter = require('./routes/order');
 
 var app = express();
+var cors = require('cors');
 const mongoose = require('mongoose');
 MONGODB_URL = process.env.MONGODB_URL;
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-
+// allow cross origin requests
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());

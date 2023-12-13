@@ -48,14 +48,65 @@
 - **Middleware**: Middleware to check JWT token and user roles using MongoDB data.
 - **Protect Routes**: Middleware to protect routes, allowing only admins to access certain routes.
 
+### authenticateToken
+**Overview**
+`authenticateToken` is used to validate JWT tokens sent from the client. This middleware extracts the token from the `Authorization` header, verifies it, and sets the user's information in `req.user`.
+
+**Frontend Usage**
+- This section introduce developer how to send a request with token correctly attached:
+```javascript
+const response = await axios.post('/path/to/api', {
+   someVar: someValue,
+}, {
+   headers: {
+      Authorization: `Bearer ${auth.token}` // Include the JWT token here
+   }
+});
+```
+
+**Backend Usage**
+- note that only `authenticated` and `vendor` require `authenticateToken`, `public` SHOULD NOT use `authenticateToken`
+```javascript
+router.post('/auth/updatePassword', authenticateToken, verifyTokenAndRole("authenticated"), userController.handleUpdatePassword);
+```
+
+
+### verifyTokenAndRole
+**Parameters**:
+- `requiredRole`: A string specifying the role required to access the route. It can be one of the following:
+  - `vendor`: Only users with the 'vendor' role can access the route.
+  - `authenticated`: Any authenticated user (both 'customer' and 'vendor') can access.
+  - `public`: The route is accessible to everyone, including unauthenticated users.
+
+**Usage**:
+To protect a route so that only vendors can access it:
+```javascript
+app.post('/some-vendor-route', verifyTokenAndRole('vendor'), vendorRouteHandler);
+```
+
+For routes accessible to any authenticated user:
+```javascript
+app.get('/some-authenticated-route', verifyTokenAndRole('authenticated'), authenticatedRouteHandler);
+```
+
+For public routes:
+```javascript
+app.get('/some-public-route', verifyTokenAndRole('public'), publicRouteHandler);
+```
+
+**Response**:
+- Success: The request proceeds to the next handler `next()` if the user's role matches the requiredRole.
+- Client Error/fail: 
+  - `requiredRole` not valid: returns a `400 Bad Request`
+  - User is not found/valid for authenticated or vendor: returns `401 Unauthorized`
+  - requiredRole is vendor but user is not vendor: `403 Unauthorized`
+- Server Error: `500 Internal Server Error`.
+
+
 ## JWT Token Handling
 - Store JWT token in client-side (e.g., localStorage) upon login.
 - Attach token in Authorization header for authenticated requests.
 - Validate token on server-side for protected routes.
-
-## Validation
-- **Frontend**: Validate inputs like email format, password strength, etc.
-- **Backend**: Validate inputs against MongoDB, ensure security measures.
 
 ## Security Considerations
 - Use JWT for data transfering.
@@ -67,9 +118,3 @@
 
 ## API Error Handling
 - Return appropriate error messages and HTTP status codes.
-
-## Testing
-- Write tests for API authentication and authorization with MongoDB integration.
-
-## Documentation
-- Document API endpoints, payloads, headers, and responses.
