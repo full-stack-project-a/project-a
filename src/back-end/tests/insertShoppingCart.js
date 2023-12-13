@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const ShoppingCart = require('../models/shoppingCart'); // Import your ShoppingCart model
 
 // Connect to your MongoDB database
-mongoose.connect('mongodb+srv://wei:1qaz2wsx3edc@chuwa-project-a.m6jd8rr.mongodb.net/', {
+
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

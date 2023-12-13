@@ -3,7 +3,7 @@ const { User } = require('../models/userSchema');
 const Product = require('../models/product'); 
 
 // Connect to your MongoDB database
-mongoose.connect('mongodb+srv://wei:1qaz2wsx3edc@chuwa-project-a.m6jd8rr.mongodb.net/', {
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
