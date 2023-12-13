@@ -56,6 +56,19 @@ This document provides detailed descriptions of the front-end routes in the shop
 - **Description:** This route is used for updating a user's password.
 - **Functionality:** Users can reset or update their password using this page.
 
+### 8. Checkout Page
+
+- **Path:** `/checkout`
+- **Method:** GET
+- **Description:** Access the checkout page where users can submit their order..
+- **Functionality:** Provides a form for users to enter shipping and payment information and complete their purchase.
+
+### 9. Error Page
+
+- **Path:** `/error`
+- **Method:** GET
+- **Description:** Displays an error page for various application errors.
+- **Functionality:** Presents an error message and provides a button to return to the home page.
 
 # Frontend Routing Protection
 ## Overview

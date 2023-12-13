@@ -86,7 +86,7 @@ const CartModal = ({ show, close }) => {
                         <input type="text" className="discount-input" value={discountCode} onChange={(e) => setDiscountCode(e.target.value)} placeholder="20DOLLAROFF" />
                         <button onClick={handleApplyDiscount}>Apply</button>
                     </div>
-                    <span class="horizontal-line"></span>
+                    <span className="horizontal-line"></span>
                 </div>
 
 

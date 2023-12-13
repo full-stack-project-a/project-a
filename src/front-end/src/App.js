@@ -9,6 +9,8 @@ import AuthComponent from './components/auth/AuthComponent';
 import ProductPage from './components/product/ProductPage';
 import DetailPage from './components/product/DetailPage';
 import Formtable from './components/product/Formtable';
+import Checkout from './components/checkout/Checkout';
+import ErrorPage from './components/error/ErrorPage';
 // import Formtable from './components/product/Formtable';
 // import ProductPage from './components/product/ProductPage';
 // import ProductCard from './components/product/CardStyle';
@@ -37,6 +39,8 @@ const AppContent = () => {
                      isVendor ? <Formtable /> : <Navigate to="/" replace />
                   } />
 
+                     <Route path="/checkout" element={<Checkout />} />
+                     <Route path="/error" element={<ErrorPage />} />
                   {/* Add more routes as needed */}
                </Routes>
             </div>
