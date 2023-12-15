@@ -45,6 +45,8 @@ const loadCart = async (req, res) => {
     try {
         const { userId } = req.params; // Assuming you pass the user ID as a parameter
         const cart = await ShoppingCart.findOne({ user: userId }).populate('items.product');
+        cart.discount = 0;
+        await cart.save();
         res.status(200).json(cart || { user: userId, items: [] });
     } catch (error) {
         console.error(error);
@@ -53,7 +55,7 @@ const loadCart = async (req, res) => {
 };
 
 // Add an item to the shopping cart and update cart-related fields
-const addToCart = async (req, res) => {
+const updateItemToCart = async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
     const { quantity } = req.body;
@@ -80,26 +82,18 @@ const addToCart = async (req, res) => {
             cart.items.push({ product: productId, quantity });
         }
 
-        // cart = calculatesCartData(cart);
-
         // Update cart-related fields
         cart.totalItems += quantity;
-        const cartTotalAmount = cart.cartTotalAmount + product.price * quantity;
-        cart.cartTotalAmount = cartTotalAmount;
-        const discountAmount = cart.discount;
+        const subtotal = cart.subtotal + product.price * quantity;
+        cart.subtotal = subtotal;
+        cart.discount = 0;
 
         // Calculate tax (e.g., 10% tax rate)
         const taxRate = 0.10;
-        cart.tax = cartTotalAmount * taxRate;
-
-        // Apply the discount to the original cart total amount
-        let discountedTotalAmount = cartTotalAmount - discountAmount;
-    
-        // Ensure the discounted total amount is not below 0
-        discountedTotalAmount = Math.max(0, discountedTotalAmount);
+        cart.tax = subtotal * taxRate;
     
         // Calculate the new estimated total
-        const estimatedTotal = discountedTotalAmount + cart.tax;
+        const estimatedTotal = subtotal + cart.tax;
         cart.estimatedTotal = estimatedTotal;
 
         await cart.save();
@@ -111,7 +105,7 @@ const addToCart = async (req, res) => {
 
 const calculatesCartData = (cart) => {
 
-    const cartTotalAmount = cart.items.reduce((acc, item) => {
+    const subtotal = cart.items.reduce((acc, item) => {
         const product = item.product;
         const quantity = item.quantity;
         return acc + product.price * quantity;
@@ -124,17 +118,17 @@ const calculatesCartData = (cart) => {
 
     // Calculate tax (if applicable)
     const taxRate = 0.10; // 10% tax rate
-    const taxAmount = cartTotalAmount * taxRate;
+    const taxAmount = subtotal * taxRate;
     cart.tax = taxAmount;
 
     // Apply the discount to the original cart total amount
-    let discountedTotalAmount = cartTotalAmount - discountAmount;
+    let discountedTotalAmount = subtotal - discountAmount;
 
     // Ensure the discounted total amount is not below 0
     discountedTotalAmount = Math.max(0, discountedTotalAmount);
 
     // Update the shopping cart fields
-    cart.cartTotalAmount = cartTotalAmount;
+    cart.subtotal = subtotal;
 
     // Calculate the new estimated total
     const estimatedTotal = discountedTotalAmount + taxAmount;
@@ -144,7 +138,7 @@ const calculatesCartData = (cart) => {
 }
 
 // Update an item in the shopping cart and update cart-related fields
-const updateCartItem = async (req, res) => {
+const updateItemInCart = async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
     const { quantity } = req.body;
@@ -233,17 +227,25 @@ const applyDiscount = async (req, res) => {
             return res.status(400).json({ message: 'Cart not found' });
         }
 
+        // Calculate the current total amount in the cart
+        const currentTotal = cart.items.reduce((total, item) => {
+            return total + (item.product.price * item.quantity);
+        }, 0);
+
         // Check if the discount code is valid (e.g., "20DOLLAROFF")
         if (discountCode === '20DOLLAROFF') {
-            // Calculate the discount amount (e.g., $20 fixed discount)
+            // Define the discount amount (e.g., $20 fixed discount)
             const discountAmount = 20;
-            cart.discount = discountAmount;
 
-            cart = calculatesCartData(cart);
-
-            await cart.save();
-
-            res.status(200).json({ cart });
+            // Check if the current total is greater than the discount amount
+            if (currentTotal > discountAmount) {
+                cart.discount = discountAmount;
+                cart = calculatesCartData(cart);
+                await cart.save();
+                res.status(200).json({ cart });
+            } else {
+                res.status(400).json({ message: 'Discount cannot be applied as total amount is less than discount' });
+            }
         } else {
             res.status(400).json({ message: 'Invalid discount code' });
         }
@@ -272,6 +274,22 @@ const clearCart = async (req, res) => {
     }
 };
 
+// Get the cart items in the shopping cart
+const getCartItems = async (req, res) => {
+
+    const userId = req.params.userId;
+
+    try {
+        const cart = await ShoppingCart.findOne({ user: userId }).populate('items.product');
+        const cartItems = cart.items;
+
+        res.status(200).json({ cartItems });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Get the total items in the shopping cart
 const getTotalItems = async (req, res) => {
     const userId = req.params.userId;
@@ -291,7 +309,7 @@ const getTotalItems = async (req, res) => {
 };
 
 // Get the cart total amount
-const getCartTotalAmount = async (req, res) => {
+const getSubtotal = async (req, res) => {
     const userId = req.params.userId;
 
     try {
@@ -308,7 +326,7 @@ const getCartTotalAmount = async (req, res) => {
             return acc + product.price * quantity;
         }, 0);
 
-        res.status(200).json({ cartTotalAmount: totalAmount });
+        res.status(200).json({ subtotal: totalAmount });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -327,12 +345,12 @@ const getTax = async (req, res) => {
 
         // Calculate tax as a percentage of the cart total amount (e.g., 10% tax rate)
         const taxRate = 0.10; // 10% tax rate
-        const cartTotalAmount = cart.items.reduce((acc, item) => {
+        const subtotal = cart.items.reduce((acc, item) => {
             const product = item.product;
             const quantity = item.quantity;
             return acc + product.price * quantity;
         }, 0);
-        const taxAmount = cartTotalAmount * taxRate;
+        const taxAmount = subtotal * taxRate;
 
         res.status(200).json({ tax: taxAmount });
     } catch (error) {
@@ -352,22 +370,21 @@ const getEstimatedTotal = async (req, res) => {
         }
 
         // Calculate the estimated total by summing up the product prices, applying tax and discount
-        const cartTotalAmount = cart.items.reduce((acc, item) => {
+        const subtotal = cart.items.reduce((acc, item) => {
             const product = item.product;
             const quantity = item.quantity;
             return acc + product.price * quantity;
         }, 0);
 
         // Apply discount (if applicable)
-        const discount = 10; // Example: $10 discount
-        const discountedTotalAmount = cartTotalAmount - discount;
+        const discount = cart.discount; // Example: $10 discount
 
         // Calculate tax
         const taxRate = 0.10; // 10% tax rate
-        const taxAmount = discountedTotalAmount * taxRate;
+        const taxAmount = subtotal * taxRate;
 
         // Calculate estimated total
-        const estimatedTotal = discountedTotalAmount + taxAmount;
+        const estimatedTotal = subtotal + taxAmount - discount;
 
         res.status(200).json({ estimatedTotal });
     } catch (error) {
@@ -375,17 +392,34 @@ const getEstimatedTotal = async (req, res) => {
     }
 };
 
+
+// Get the discount 
+const getDiscount = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const cart = await ShoppingCart.findOne({ user: userId }).populate('items.product');
+        const discount = cart.discount;
+
+        res.status(200).json({ discount });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 module.exports = {
     createShoppingCart,
     deleteShoppingCart,
     loadCart,
-    addToCart,
-    updateCartItem,
+    updateItemInCart,
+    updateItemToCart,
     removeCartItem,
     clearCart,
     getTotalItems,
-    getCartTotalAmount,
+    getSubtotal,
     getTax,
     applyDiscount,
-    getEstimatedTotal
+    getEstimatedTotal,
+    getDiscount,
+    getCartItems,
 };
