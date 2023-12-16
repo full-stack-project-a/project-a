@@ -199,6 +199,19 @@ app.get('/some-public-route', verifyTokenAndRole('public'), publicRouteHandler);
   ]
 }
 ```
+## Get Amount of Products
+### API Endpoint Design
+* Endpoint: `/api/v1/products/count`
+* Method: `GET`
+### Authorization
+* Not Required
+### Response
+* Status Code: 200 (OK)
+```json
+{
+  "count": 10
+}
+```
 
 
 
