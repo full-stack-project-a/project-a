@@ -23,7 +23,7 @@ const shoppingCartSchema = new Schema({
         type: Number,
         default: 0,
     },
-    cartTotalAmount: {
+    subtotal: {
         type: Number,
         default: 0.0,
     },
