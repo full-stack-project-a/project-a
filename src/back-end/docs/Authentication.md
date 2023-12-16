@@ -55,6 +55,8 @@
 **Frontend Usage**
 - This section introduce developer how to send a request with token correctly attached:
 ```javascript
+import { useAppContext } from "path/to/AppContext";
+const { auth } = useAppContext();
 const response = await axios.post('/path/to/api', {
    someVar: someValue,
 }, {

@@ -7,7 +7,6 @@ const authenticateToken = (req, res, next) => {
 
    // if there isn't any token, return 401
    if (token == null) {
-      console.log("authenticateToken");
       return res.status(400).json({ message: "Bad Request: No token received." });
    }
 
