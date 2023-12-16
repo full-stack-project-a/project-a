@@ -5,7 +5,7 @@ const authenticateToken = (req, res, next) => {
    const authHeader = req.headers['authorization'];
    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
-   // if there isn't any token, return 401
+   // if there isn't any token, return 400
    if (token == null) {
       return res.status(400).json({ message: "Bad Request: No token received." });
    }
