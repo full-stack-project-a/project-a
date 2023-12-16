@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchCartItems, fetchTotalItemsNumber } from './redux/actions/cartActions';
 import './App.css';
 import { AppProvider, useAppContext } from './context/AppContext';
 import Header from './components/common/Header';
