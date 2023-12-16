@@ -7,16 +7,16 @@ const CartItem = ({ item, incrementQuantity, decrementQuantity, handleRemoveItem
 
             <div className="cart-item-details">
                 <div className='cart-item-name-price'>
-                    <h3>{item.name}</h3>
-                    <p>${item.price}</p>
+                    <h3>{item.product.name}</h3>
+                    <p>${item.product.price}</p>
                 </div>
                 <div className='cart-selector-remove'>
                     <div className="quantity-selector">
-                        <button onClick={() => decrementQuantity(item.id)}>-</button>
+                        <button onClick={decrementQuantity}>-</button>
                         <span>{item.quantity}</span>
-                        <button onClick={() => incrementQuantity(item.id)}>+</button>
+                        <button onClick={incrementQuantity}>+</button>
                     </div>
-                    <button className='cart-remove-button' onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                    <button className='cart-remove-button' onClick={() => handleRemoveItem(item._id)}>Remove</button>
                 </div>
             </div>
         </div>
