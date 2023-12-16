@@ -6,7 +6,8 @@ async function createProduct(req, res) {
         const savedProduct = await newProduct.save();
         res.status(201).json(savedProduct);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.log("eroor");
+        res.status(401).json({ message: error.message });
     }
 }
 
@@ -23,14 +24,14 @@ async function getProductByID(req, res) {
     }
 }
 async function getProducts(req, res) {
-    const { price, limit = 20, page = 1 } = req.query;
+    const { price, limit = 10, page = 1 } = req.query;
     try {
         let query = Product.find();
         query.sort({ createdAt: -1 });
         if (price === 'asc' || price === 'desc') {
             query.sort({ price: price === 'asc' ? 1 : -1 });
         }
-        const pageSize = Math.max(limit, 20);
+        const pageSize = Math.max(limit, 10);
         const skip = (page - 1) * pageSize;
         query = query.limit(pageSize).skip(skip);
         const products = await query.exec();
@@ -57,10 +58,20 @@ async function editProduct(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+// /products/count
+async function getTotalSize(req, res) {
+    try {
+        const totalSize = await Product.countDocuments();
+        res.json(totalSize);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 module.exports = {
     createProduct,
     getProductByID,
     getProducts,
-    editProduct
+    editProduct,
+    getTotalSize
 };
