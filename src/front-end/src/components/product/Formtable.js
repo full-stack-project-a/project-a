@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAppContext } from "../../context/AppContext";
 import axios from 'axios';
 import { Box, Button, Typography, TextField, Grid, Select, MenuItem,  useMediaQuery, useTheme, Paper, IconButton } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
@@ -23,12 +24,16 @@ const Formtable = () => {
         setIsUrlValid(urlRegex.test(event.target.value));
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
+    const { auth, setAuth, setIsLoading } = useAppContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);
         try {
             // http://127.0.0.1:8000/api/v1/products
-            const response = await axios.post('API_ENDPOINT', formData);
+            const response = await axios.post('/api/v1/products', formData, {
+                headers: {
+                   Authorization: `Bearer ${auth.token}` // Include the JWT token here
+                }});
             console.log(response.data);
             // 处理成功的响应
         } catch (error) {
