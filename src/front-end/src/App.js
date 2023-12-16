@@ -32,7 +32,7 @@ const AppContent = () => {
                   <Route path="/signup" element={<AuthComponent currPage="signup" />} />
                   <Route path="/updatePassword" element={<AuthComponent currPage="updatePassword" />} />
                   <Route path="/products" element={<ProductPage />} />
-                  <Route path="/products/1" element={<DetailPage />} />
+                  <Route path="/products/:id" element={<DetailPage />} />
                   {/* <Route path="/products/new" element={<Formtable />} /> */}
                   {/* Conditional rendering for protected route */}
                   <Route path="/products/new" element={
