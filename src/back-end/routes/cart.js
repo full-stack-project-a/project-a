@@ -4,11 +4,11 @@ const shoppingCartController = require('../controllers/shoppingCartController');
 
 
 
-// Create an item for a user
-router.post('/:userId/cartItem/:productId', shoppingCartController.addToCart);
+// Update an item for a user in the product page
+router.post('/:userId/cartItem/:productId', shoppingCartController.updateItemToCart);
 
 // Update an item in the shopping cart
-router.put('/:userId/cartItem/:productId', shoppingCartController.updateCartItem);
+router.put('/:userId/cartItem/:productId', shoppingCartController.updateItemInCart);
 
 // Remove an item from the shopping cart
 router.delete('/:userId/cartItem/:productId', shoppingCartController.removeCartItem);
@@ -29,16 +29,22 @@ router.delete('/:userId/delete', shoppingCartController.deleteShoppingCart);
 router.get('/:userId/totalItems', shoppingCartController.getTotalItems);
 
 // Get the cart total amount
-router.get('/:userId/cartTotalAmount', shoppingCartController.getCartTotalAmount);
+router.get('/:userId/subtotal', shoppingCartController.getSubtotal);
 
 // Get the tax amount
 router.get('/:userId/tax', shoppingCartController.getTax);
 
-// Get the discount amount
-router.put('/:userId/discount', shoppingCartController.applyDiscount);
+// apply the discount
+router.post('/:userId/discount', shoppingCartController.applyDiscount);
 
 // Get the estimated total
 router.get('/:userId/estimatedTotal', shoppingCartController.getEstimatedTotal);
+
+// Get the discount
+router.get('/:userId/discount', shoppingCartController.getDiscount);
+
+// Get the cart items
+router.get('/:userId/cartItems', shoppingCartController.getCartItems);
 
 
 module.exports = router;
