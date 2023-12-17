@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
@@ -39,8 +40,8 @@ const AppContent = () => {
                      isVendor ? <Formtable /> : <Navigate to="/" replace />
                   } />
 
-                     <Route path="/checkout" element={<Checkout />} />
-                     <Route path="/error" element={<ErrorPage />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/error" element={<ErrorPage />} />
                   {/* Add more routes as needed */}
                </Routes>
             </div>

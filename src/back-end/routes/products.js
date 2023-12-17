@@ -9,5 +9,6 @@ router.get('/count', verifyTokenAndRole("public"), productController.getTotalSiz
 router.get('/:id', verifyTokenAndRole("public"), productController.getProductByID);
 router.put('/:id', authenticateToken, verifyTokenAndRole("vendor"),productController.editProduct);
 router.get('/', verifyTokenAndRole("public"), productController.getProducts);
+router.get('/search', verifyTokenAndRole("public"), productController.getProducts);
 
 module.exports = router;

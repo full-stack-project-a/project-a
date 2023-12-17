@@ -5,10 +5,9 @@ import '../../styles/main/global.css';
 import CartModel from '../cart/CartModal'
 import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
-import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import SearchBar from './SearchBar';
 
 const Header = () => {
 
@@ -20,14 +19,14 @@ const Header = () => {
    const [cartData, setCartData] = useState(null);
 
    // const fetchCartData = async (userId) => {
-      const fetchCartData = async () => {
-         try {
-             const response = await axios.get(`${BACK_END_API}/cart/${TEST_USER_ID}/load`);
-             setCartData(response.data);
-         } catch (error) {
-             console.error('Error fetching cart data:', error);
-         }
-     };
+   const fetchCartData = async () => {
+      try {
+         const response = await axios.get(`${BACK_END_API}/cart/${TEST_USER_ID}/load`);
+         setCartData(response.data);
+      } catch (error) {
+         console.error('Error fetching cart data:', error);
+      }
+   };
 
    const toggleCartModal = () => {
       if (!showCartModal) {
@@ -54,7 +53,7 @@ const Header = () => {
 
    useEffect(() => {
       fetchCartData();
-  }, []);
+   }, []);
 
    return (
       <header className="header">
@@ -67,12 +66,8 @@ const Header = () => {
                </div>
 
             </div>
-            <div className='search-bar'>
-               <input type="text" className="searchText" placeholder="search" />
-               <button type="submit" className="searchButton">
-                  <CiSearch className='searchIcon' />
-               </button>
-            </div>
+
+            <SearchBar />
 
             <div className='profile-cart-container'>
                <div className='profile-container' onClick={handleProfileClick}>

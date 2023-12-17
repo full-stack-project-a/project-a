@@ -23,10 +23,23 @@ async function getProductByID(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+
 async function getProducts(req, res) {
-    const { price, limit = 10, page = 1 } = req.query;
+    const { price, limit = 10, page = 1, search } = req.query;
     try {
         let query = Product.find();
+
+        // search functionality
+        if (search) {
+            query = query.find({
+                $or: [
+                    { name: new RegExp(search, 'i') },
+                    { description: new RegExp(search, 'i') },
+                    { category: new RegExp(search, 'i') }
+                ]
+            });
+        }
+
         query.sort({ createdAt: -1 });
         if (price === 'asc' || price === 'desc') {
             query.sort({ price: price === 'asc' ? 1 : -1 });
@@ -41,6 +54,7 @@ async function getProducts(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+
 async function editProduct(req, res) {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(

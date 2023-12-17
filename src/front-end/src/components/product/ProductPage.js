@@ -3,7 +3,9 @@ import { Box, Typography, useTheme, useMediaQuery, Grid, Paper, Button, Select, 
 import ProductCard from './CardStyle';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { useAppContext } from '../../context/AppContext';
 import axios from 'axios';
+
 const range = (start, end) => {
     const length = end - start + 1;
     return Array.from({ length }, (_, i) => start + i);
@@ -28,6 +30,7 @@ const ProductPage = () => {
     const [totalSize, setTotalSize] = useState(0);
     const [filter, setFilter] = useState("Last added");
     const [products, setProducts] = useState([]);
+    const { searchQuery } = useAppContext();
 
     const urlBuilder = () => {
         let baseurl = `/api/v1/products?limit=10`;
@@ -41,16 +44,21 @@ const ProductPage = () => {
         baseurl += `&page=${page}`;
         return baseurl;
     }
+
     const fetchProducts = async () => {
         try {
-            const res = await axios.get(urlBuilder());
-            console.log(res.data);
+            let url = urlBuilder();
+            if (searchQuery) {
+                // remove whitespace some dummy user will add
+                url += `&search=${encodeURIComponent(searchQuery)}`;
+            }
+            const res = await axios.get(url);
             setProducts(res.data);
         } catch (error) {
             console.log(error);
         }
-    }
-
+    };
+  
     const handlePageChange = (event, value) => {
         setPage(value);
     };
@@ -67,7 +75,7 @@ const ProductPage = () => {
             console.log(err);
         })
     }
-    , [page, filter]);
+    , [searchQuery, page, filter]);
 
   
     return (
