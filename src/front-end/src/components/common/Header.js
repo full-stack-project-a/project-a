@@ -15,8 +15,6 @@ import {
    fetchCartTotal,
    fetchCartDiscount,
 } from '../../redux/actions/cartActions';
-
-import axios from 'axios';
 import SearchBar from './SearchBar';
 
 const Header = () => {
