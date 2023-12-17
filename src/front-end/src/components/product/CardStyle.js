@@ -39,7 +39,9 @@ const ProductCard = ({product}) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" size="large" style={{
-                        }} fullWidth>
+                        }} fullWidth
+                        onClick={() => navigate(`/products/update/${product._id}`)}
+                        >
                             Edit
                         </Button>
                     </Grid>
