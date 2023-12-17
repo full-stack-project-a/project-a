@@ -473,6 +473,37 @@ const getDiscount = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+// Get a specific item's quantity
+const  getCartItemQuantity = async (req, res) => {
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+
+    try {
+        let cart = await ShoppingCart.findOne({ user: userId }).populate('items.product');
+
+        // If no cart is found, create a new one
+        if (!cart) {
+            cart = new ShoppingCart({ user: userId, items: [] });
+            await cart.save();
+            return res.status(200).json({ quantity: 0 });
+        }
+
+        // Find the item with the given productId
+        const item = cart.items.find(i => i.product._id.toString() === productId);
+
+        // If the item is found, return its quantity
+        if (item) {
+            return res.status(200).json({ quantity: item.quantity });
+        } else {
+            // Item not found in the cart, return 0 (or handle as needed)
+            return res.status(200).json({ quantity: 0 });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 module.exports = {
     createShoppingCart,
     deleteShoppingCart,
@@ -488,4 +519,5 @@ module.exports = {
     getEstimatedTotal,
     getDiscount,
     getCartItems,
+    getCartItemQuantity,
 };

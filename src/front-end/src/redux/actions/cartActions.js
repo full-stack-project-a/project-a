@@ -1,5 +1,5 @@
 import * as cartApi from '../../api/cartApi';
-import { SET_CART_ITEMS, SET_ERROR, SET_SUBTOTAL, SET_TAX, SET_TOTAL, SET_DISCOUNT, SET_CART_NUMBER } from './actionTypes';
+import { SET_CART_ITEMS, SET_ERROR, SET_SUBTOTAL, SET_TAX, SET_TOTAL, SET_DISCOUNT, SET_CART_NUMBER, SET_CART_ITEM_QUANTITY, RESET_CART } from './actionTypes';
 
 // Fetch cart items
 export const fetchCartItems = (userId, token) => async dispatch => {
@@ -125,4 +125,19 @@ export const fetchTotalItemsNumber = (userId, token) => async dispatch => {
     } catch (error) {
         dispatch({ type: SET_ERROR, payload: error.message });
     }
+};
+
+// Fetch A CartItem Quantity
+export const fetchCartItemQuantity = (userId, productId, token) => async dispatch => {
+    try {
+        const response = await cartApi.fetchCartItemQuantity(userId, productId, token);
+        dispatch({ type: SET_CART_ITEM_QUANTITY, payload: { productId, quantity: response.data.quantity } });
+    } catch (error) {
+        dispatch({ type: SET_ERROR, payload: error.message });
+    }
+}
+
+// Reset Cart
+export const resetCart = () => {
+    return { type: RESET_CART };
 };

@@ -1,4 +1,4 @@
-import { SET_CART_ITEMS, SET_CART_NUMBER, SET_ERROR, SET_SUBTOTAL, SET_TAX, SET_TOTAL, SET_DISCOUNT, CLEAR_CART } from '../actions/actionTypes';
+import { SET_CART_ITEMS, SET_CART_NUMBER, SET_ERROR, SET_SUBTOTAL, SET_TAX, SET_TOTAL, SET_DISCOUNT, CLEAR_CART, SET_CART_ITEM_QUANTITY, RESET_CART } from '../actions/actionTypes';
 
 
 const initialState = {
@@ -52,6 +52,19 @@ const shoppingCartReducer = (state = initialState, action) => {
             return {
                 ...initialState
             };
+        case SET_CART_ITEM_QUANTITY:
+            const updatedItems = state.items.map(item => {
+                if (item.product === action.payload.productId) {
+                    return { ...item, quantity: action.payload.quantity };
+                }
+                return item;
+            });
+            return {
+                ...state,
+                items: updatedItems
+            };
+        case RESET_CART:
+            return { ...initialState };
         default:
             return state;
     }

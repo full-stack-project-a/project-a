@@ -14,6 +14,7 @@ import {
    fetchCartTax,
    fetchCartTotal,
    fetchCartDiscount,
+   resetCart
 } from '../../redux/actions/cartActions';
 
 import axios from 'axios';
@@ -53,6 +54,7 @@ const Header = () => {
          if (confirmSignOut) {
             setAuth({ isAuthenticated: false, user: null, token: null });
             localStorage.removeItem('auth');
+            dispatch(resetCart());
             navigate("");
             // add other sign-out logic
          }

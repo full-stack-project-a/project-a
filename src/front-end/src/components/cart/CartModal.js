@@ -13,13 +13,14 @@ import {
     fetchCartDiscount,
     applyDiscountCode, 
     updateCartItemQuantity,
-    removeCartItem
+    removeCartItem,
+    resetCart
 } from '../../redux/actions/cartActions';
 
 
 const CartModal = ({ show, close }) => {
 
-    const { auth, setAuth } = useAppContext();
+    const { auth } = useAppContext();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { items, subtotal, tax, total, cartItemsNumber, discount } = useSelector(state => state.shoppingCart);

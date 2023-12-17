@@ -95,7 +95,7 @@ const DetailPage = () => {
                                 alignItems: 'center',
                             }}
                             >
-                                <AddtoCart/>
+                                <AddtoCart product={product}/>
                                 <Button
                                     // variant="contained"
                                     variant='outlined'

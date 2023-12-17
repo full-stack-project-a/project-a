@@ -1,5 +1,6 @@
 const Order = require('../models/order');
 const ShoppingCart = require('../models/shoppingCart');
+const Product = require('../models/product');
 
 // Create an order from the shopping cart
 const createOrder = async (req, res) => {
@@ -25,6 +26,23 @@ const createOrder = async (req, res) => {
         });
 
         await newOrder.save();
+
+        // Update each product's inStockQuantity
+        const updatePromises = cart.items.map(async (item) => {
+            try {
+                const updateResult = await Product.updateOne(
+                    { _id: item.product._id },
+                    { $inc: { inStockQuantity: -item.quantity } }
+                );
+                console.log(`Updated Product ID ${item.product._id}: `, updateResult);
+            } catch (error) {
+                console.error(`Error updating Product ID ${item.product._id}: `, error);
+            }
+        });
+        
+        await Promise.all(updatePromises);
+
+        // Clear the shopping cart
         await ShoppingCart.findOneAndUpdate(
             { user: userId },
             {
