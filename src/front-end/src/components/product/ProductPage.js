@@ -5,6 +5,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { useAppContext } from '../../context/AppContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const range = (start, end) => {
     const length = end - start + 1;
@@ -25,6 +26,7 @@ const ProductPage = () => {
         'Price: High to Low',
     ];
     const theme = useTheme();
+    const navigate = useNavigate();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [page, setPage] = useState(1);
     const [totalSize, setTotalSize] = useState(0);
@@ -104,7 +106,9 @@ const ProductPage = () => {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <ThemeProvider theme={newTheme}>
-                                <Button variant="contained" color="primary" style={{height:'100%'}}>
+                                <Button variant="contained" color="primary" style={{height:'100%'}}
+                                    onClick={() => navigate(`/products/new`)}
+                                >
                                     Add Product
                                 </Button>
                                 </ThemeProvider>
