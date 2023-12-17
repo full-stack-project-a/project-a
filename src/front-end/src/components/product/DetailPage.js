@@ -19,13 +19,12 @@ const DetailPage = () => {
     const [product, setProduct] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/v1/products/${id}`)
+        axios.get(`/api/v1/products/${id}`)
         .then((res) => {
             console.log(res.data);
             setProduct(res.data);
         })
         .catch((err) => {
-            // console.log(err);
             navigate('/error');
         })
     }, [id]);

@@ -36,7 +36,7 @@ const handleSignup = async (req, res) => {
       res.status(201).json({
          message: 'User successfully registered',
          token: token,
-         user: { username: newUser.username, role: newUser.role }
+         user: { username: newUser.username, role: newUser.role, userId: newUser._id }
       });
    } catch (err) {
       if (err.message === "User validation failed: role: `other` is not a valid enum value for path `role`.") {
@@ -64,7 +64,7 @@ const handleSignin = async (req, res) => {
          res.json({
             message: 'Authentication success',
             token: token,
-            user: { username: user.username, role: user.role }
+            user: { username: user.username, role: user.role, userId: user._id }
          })
       } else {
          return res.status(401).json({ message: "Invalid username or password" });

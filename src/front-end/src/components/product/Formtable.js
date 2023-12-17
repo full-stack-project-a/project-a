@@ -29,16 +29,13 @@ const Formtable = () => {
         event.preventDefault();
         console.log(formData);
         try {
-            // http://127.0.0.1:8000/api/v1/products
             const response = await axios.post('/api/v1/products', formData, {
                 headers: {
                    Authorization: `Bearer ${auth.token}` // Include the JWT token here
                 }});
             console.log(response.data);
-            // 处理成功的响应
         } catch (error) {
             console.error('There was an error!', error);
-            // 处理错误
         }
     };
     return (

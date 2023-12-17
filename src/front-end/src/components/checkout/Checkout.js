@@ -12,6 +12,9 @@ import Typography from '@mui/material/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import { useAppContext } from '../../context/AppContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { placeOrder } from '../../redux/actions/orderActions';
 
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
@@ -30,9 +33,17 @@ function getStepContent(step) {
 }
 
 export default function Checkout() {
+    const { auth, setAuth } = useAppContext();
+    const dispatch = useDispatch();
+    const order = useSelector(state => state.order.order);
+
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
+        if (activeStep === steps.length - 1) {
+            // Dispatch the placeOrder action when on the last step
+            dispatch(placeOrder(auth.user.userId, auth.token));
+        }
         setActiveStep(activeStep + 1);
     };
 
@@ -70,11 +81,17 @@ export default function Checkout() {
                             <Typography variant="h5" gutterBottom>
                                 Thank you for your order.
                             </Typography>
-                            <Typography variant="subtitle1">
-                                Your order number is #2001539. We have emailed your order
-                                confirmation, and will send you an update when your order has
-                                shipped.
-                            </Typography>
+                            {order? (
+                                <Typography variant="subtitle1">
+                                    We have emailed your order
+                                    confirmation, and will send you an update when your order has
+                                    shipped.
+                                </Typography>
+                            ) : (
+                                <Typography variant="subtitle1">
+                                    Processing your order...
+                                </Typography>
+                            )}
                         </React.Fragment>
                     ) : (
                         <React.Fragment>

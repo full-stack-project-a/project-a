@@ -117,28 +117,11 @@ const ProductPage = () => {
             <Box style={{ margin: '0 auto', maxWidth: '100%', marginTop:'20px' }}>
                 <Paper elevation={24} style={{ margin: '0 auto', maxWidth: '80%', padding: '20px' }}>
                 <Grid container spacing={5} style={{ margin: '0 auto', maxWidth: '90%' }} >
-                    {/* {range(1, 10).map((product) => (
-                        <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product}>
-                            <Box>
-                                <ProductCard
-                                    product={{
-                                        name: "iPhone 13 Pro Max",
-                                        price: "1000",
-                                        imageUrl: 'https://source.unsplash.com/random'
-                                    }} 
-                                />
-                            </Box>    
-                        </Grid>
-                    ))} */}
                     {products.map((product) => (
                         <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product._id}>
                             <Box>
                                 <ProductCard
-                                    product={{
-                                        name: product.name,
-                                        price: product.price,
-                                        imageUrl: product.imageUrl
-                                    }} 
+                                    product={product}
                                 />
                             </Box>    
                         </Grid>

@@ -3,7 +3,10 @@ const ShoppingCart = require('../models/shoppingCart'); // Import your ShoppingC
 
 // Connect to your MongoDB database
 
-mongoose.connect(process.env.MONGODB_URL, {
+const MONGODB_URL='mongodb+srv://wei:1qaz2wsx3edc@chuwa-project-a.m6jd8rr.mongodb.net/'
+
+
+mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -11,7 +14,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 // Sample shopping cart data
 const shoppingCartData = [
   {
-    user: '6577a7f2a4603ab4ef7cbd50', // Replace 'userId1' with the actual user ID
+    user: '657e6d9ff085dc60e156c494', // Replace 'userId1' with the actual user ID
     items: [
       {
         product: '657267ed0f9e834d6ce3f316', // Replace 'productId1' with the actual product ID
@@ -20,6 +23,10 @@ const shoppingCartData = [
       {
         product: '657381f5fc05a303c0901f07', // Replace 'productId2' with the actual product ID
         quantity: 1,
+      },
+      {
+        product: '65738272fc05a303c0901f16', // Replace 'productId3' with the actual product ID
+        quantity: 2,
       },
     ],
   },
