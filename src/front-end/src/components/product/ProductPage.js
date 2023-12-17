@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, useTheme, useMediaQuery, Grid, Paper, Button, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Pagination, PaginationItem, createTheme, ThemeProvider } from '@mui/material';
 import ProductCard from './CardStyle';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import axios from 'axios';
 const range = (start, end) => {
     const length = end - start + 1;
     return Array.from({ length }, (_, i) => start + i);
 }
-const names = [
-    'Last added',
-    'Price: Low to High',
-    'Price: High to Low',
-  ];
+
 const newTheme = createTheme({
     palette: {
         primary: {
@@ -20,58 +17,99 @@ const newTheme = createTheme({
     },
 });
 const ProductPage = () => {
+    const options = [
+        'Last added',
+        'Price: Low to High',
+        'Price: High to Low',
+    ];
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [personName, setPersonName] = useState([]);
-    const handleChange = (event) => {
-        const {
-          target: { value },
-        } = event;
-        setPersonName(
-          // On autofill we get a stringified value.
-          typeof value === 'string' ? value.split(',') : value,
-        );
+    const [page, setPage] = useState(1);
+    const [totalSize, setTotalSize] = useState(0);
+    const [filter, setFilter] = useState("Last added");
+    const [products, setProducts] = useState([]);
+
+    const urlBuilder = () => {
+        let baseurl = `/api/v1/products?limit=10`;
+        if (filter === 'Price: Low to High') {
+            baseurl += '&price=asc';
+        } else if (filter === 'Price: High to Low') {
+            baseurl += '&price=desc';
+        } else {
+            baseurl += `&date=desc`;
+        }
+        baseurl += `&page=${page}`;
+        return baseurl;
+    }
+    const fetchProducts = async () => {
+        try {
+            const res = await axios.get(urlBuilder());
+            console.log(res.data);
+            setProducts(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handlePageChange = (event, value) => {
+        setPage(value);
     };
+
+    useEffect(() => {
+        // get total size from enpoint /api/v1/products/count
+        fetchProducts();
+        axios.get(`api/v1/products/count`)
+        .then((res) => {
+            console.log(res.data);
+            setTotalSize(Math.ceil(res.data / 10));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    , [page, filter]);
+
   
     return (
         <div>
             <Box style={{ margin: '0 auto', maxWidth: '80%', marginTop:'20px' }}>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={8}>
                         <Typography variant='h4' align={isMobile? 'center': 'left'}>
                             Product Page
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} align={isMobile? 'center': 'right'}>
-                        <Box>
-                            <Select
-                                value={personName}
-                                onChange={handleChange}
-                                input={<OutlinedInput label="Tag" />}
-                                renderValue={(selected) => selected.join(', ')}
-                                style={{ marginRight: '20px' , width: '180px'}}
-                                defaultValue={names[0]}
-                                >
-                                {names.map((name) => (
-                                    <MenuItem key={name} value={name}>
-                                    <Checkbox checked={personName.indexOf(name) > -1} />
-                                    <ListItemText primary={name} />
+                    <Grid item xs={12} sm={4} align={isMobile? 'center': 'right'}>
+                        {/* <Box> */}
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={6}>
+                            <Select style={{ width:isMobile?'70%':'100%', marginRight: isMobile? '0':'20px'}}
+                                    defaultValue={filter}
+                                    onChange={(e) => setFilter(e.target.value)}
+                            >
+                                {options.map((option) => (
+                                    <MenuItem key={option} value={option}>
+                                        <ListItemText primary={option} />
                                     </MenuItem>
                                 ))}
                             </Select>
-                            <ThemeProvider theme={newTheme}>
-                            <Button variant="contained" color="primary">
-                                Add Product
-                            </Button>
-                            </ThemeProvider>
-                        </Box>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <ThemeProvider theme={newTheme}>
+                                <Button variant="contained" color="primary" style={{height:'100%'}}>
+                                    Add Product
+                                </Button>
+                                </ThemeProvider>
+                            </Grid>
+                        </Grid>
+                        {/* </Box> */}
                     </Grid>
                 </Grid>
             </Box>
             <Box style={{ margin: '0 auto', maxWidth: '100%', marginTop:'20px' }}>
                 <Paper elevation={24} style={{ margin: '0 auto', maxWidth: '80%', padding: '20px' }}>
                 <Grid container spacing={5} style={{ margin: '0 auto', maxWidth: '90%' }} >
-                    {range(1, 10).map((product) => (
+                    {/* {range(1, 10).map((product) => (
                         <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product}>
                             <Box>
                                 <ProductCard
@@ -79,6 +117,19 @@ const ProductPage = () => {
                                         name: "iPhone 13 Pro Max",
                                         price: "1000",
                                         imageUrl: 'https://source.unsplash.com/random'
+                                    }} 
+                                />
+                            </Box>    
+                        </Grid>
+                    ))} */}
+                    {products.map((product) => (
+                        <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product._id}>
+                            <Box>
+                                <ProductCard
+                                    product={{
+                                        name: product.name,
+                                        price: product.price,
+                                        imageUrl: product.imageUrl
                                     }} 
                                 />
                             </Box>    
@@ -92,7 +143,11 @@ const ProductPage = () => {
                 justifyContent={isMobile ? 'center' : 'flex-end'}
             >
                 {/* Pages select */}
-                <Pagination count={5} shape="rounded" color='primary'
+                <Pagination count={totalSize} shape="rounded" color='primary'
+                      page={page}
+                      onChange={handlePageChange}
+
+                    //   onPageChange={handleChangePage}
                       renderItem={(item) => (
                         <PaginationItem
                           slots={{ previous: KeyboardDoubleArrowLeftIcon, next: KeyboardDoubleArrowRightIcon }}

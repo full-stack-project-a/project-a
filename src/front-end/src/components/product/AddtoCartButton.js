@@ -15,7 +15,6 @@ function AddtoCart() {
       setCount(count - 1);
     }
   };
-
   return (
     <Button
       onClick={handleIncrement}

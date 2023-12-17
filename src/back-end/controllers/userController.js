@@ -5,8 +5,10 @@ const authenticateToken = (req, res, next) => {
    const authHeader = req.headers['authorization'];
    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
-   // if there isn't any token, return 401
-   if (token == null) return res.status(400).json({ message: "Bad Request: No token received." });
+   // if there isn't any token, return 400
+   if (token == null) {
+      return res.status(400).json({ message: "Bad Request: No token received." });
+   }
 
    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       // if token is no longer valid
@@ -35,6 +37,7 @@ const authenticateToken = (req, res, next) => {
 const verifyTokenAndRole = (requiredRole) => async (req, res, next) => {
    // Validate requiredRole parameter
    if (!['public', 'authenticated', 'vendor'].includes(requiredRole)) {
+      console.log("Midleware Error: Invalid role specified");
       return res.status(400).json({ message: "Bad Request: Invalid role specified" });
    }
 
