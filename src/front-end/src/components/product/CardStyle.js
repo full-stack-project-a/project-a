@@ -1,6 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
 import React from 'react';
 import AddtoCart from './AddtoCartButton';
+import { useNavigate } from 'react-router-dom';
 const theme = createTheme({
     palette: {
         primary: {
@@ -9,10 +10,16 @@ const theme = createTheme({
     },
 });
 const ProductCard = ({product}) => {
+    const navigate = useNavigate();
+    const handleCardClick = () => {
+        navigate(`/products/${product._id}`);
+        // console.log(`/products/${product._id}`);
+    }
     return (
         <ThemeProvider theme={theme}>
-        <Card >
+        <Card>
             <CardMedia
+            onClick={handleCardClick}
             component="img"
             alt="green iguana"
             height="140"
