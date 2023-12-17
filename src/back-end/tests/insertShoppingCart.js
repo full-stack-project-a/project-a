@@ -24,6 +24,10 @@ const shoppingCartData = [
         product: '657381f5fc05a303c0901f07', // Replace 'productId2' with the actual product ID
         quantity: 1,
       },
+      {
+        product: '65738272fc05a303c0901f16', // Replace 'productId3' with the actual product ID
+        quantity: 2,
+      },
     ],
   },
   // Add more shopping cart records as needed
