@@ -3,9 +3,10 @@ import { useAppContext } from "../../context/AppContext";
 import axios from 'axios';
 import { Box, Button, Typography, TextField, Grid, Select, MenuItem,  useMediaQuery, useTheme, Paper, IconButton } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 const Formtable = ({isUpdateMode = false}) => {
     const { productID } = useParams();
+    const navigate = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const urlRegex = /^(http|https):\/\/[^ "]+$/;
@@ -37,6 +38,7 @@ const Formtable = ({isUpdateMode = false}) => {
                        Authorization: `Bearer ${auth.token}` // Include the JWT token here
                     }});
                 console.log(response.data);
+                navigate('/success');
             }
             catch(error){
                 console.error('There was an error!', error);
@@ -49,6 +51,7 @@ const Formtable = ({isUpdateMode = false}) => {
                        Authorization: `Bearer ${auth.token}` // Include the JWT token here
                     }});
                 console.log(response.data);
+                navigate('/success');
             } catch (error) {
                 console.error('There was an error!', error);
             }

@@ -10,6 +10,7 @@ import DetailPage from './components/product/DetailPage';
 import Formtable from './components/product/Formtable';
 import Checkout from './components/checkout/Checkout';
 import ErrorPage from './components/error/ErrorPage';
+import SuccessPage from './components/success/SuccessPage';
 // import Formtable from './components/product/Formtable';
 // import ProductPage from './components/product/ProductPage';
 // import ProductCard from './components/product/CardStyle';
@@ -43,6 +44,7 @@ const AppContent = () => {
 
                      <Route path="/checkout" element={<Checkout />} />
                      <Route path="/error" element={<ErrorPage />} />
+                     <Route path="/success" element={<SuccessPage />} />
                   {/* Add more routes as needed */}
                </Routes>
             </div>
