@@ -17,7 +17,6 @@ import {
    resetCart
 } from '../../redux/actions/cartActions';
 
-import axios from 'axios';
 import SearchBar from './SearchBar';
 
 const Header = () => {
@@ -55,7 +54,7 @@ const Header = () => {
             setAuth({ isAuthenticated: false, user: null, token: null });
             localStorage.removeItem('auth');
             dispatch(resetCart());
-            navigate("");
+            navigate("/products");
             // add other sign-out logic
          }
       } else {

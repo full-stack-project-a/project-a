@@ -13,8 +13,7 @@ import {
     fetchCartDiscount,
     applyDiscountCode, 
     updateCartItemQuantity,
-    removeCartItem,
-    resetCart
+    removeCartItem
 } from '../../redux/actions/cartActions';
 
 
