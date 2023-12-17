@@ -76,7 +76,7 @@ The `App.js` file in the application uses React Router for protecting certain ro
 
 ## Key Components
 - `AppProvider`: Provides the application context, including authentication state.
-- `useAppContext`: Hook used to access the application context, particularly for authentication (`auth`) and loading state (`isLoading`).
+- `useAppContext` and `useAppContext`: Hook used to access the application context, particularly for authentication (`auth`) and loading state (`isLoading`).
 - `isVendor`: A derived state indicating if the logged-in user is a vendor.
 
 ## Route Protection

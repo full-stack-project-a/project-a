@@ -23,8 +23,9 @@ async function getProductByID(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+
 async function getProducts(req, res) {
-    const { price, limit = 10, page = 1 } = req.query;
+    const { price, limit = 10, page = 1, search } = req.query;
     try {
         let query = Product.find();
         if (price === 'asc' || price === 'desc') {
@@ -42,6 +43,7 @@ async function getProducts(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+
 async function editProduct(req, res) {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
