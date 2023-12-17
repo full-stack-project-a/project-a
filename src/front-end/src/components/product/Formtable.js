@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppContext } from "../../context/AppContext";
 import axios from 'axios';
 import { Box, Button, Typography, TextField, Grid, Select, MenuItem,  useMediaQuery, useTheme, Paper, IconButton } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-const Formtable = () => {
+import { useParams } from 'react-router-dom';
+const Formtable = ({isUpdateMode = false}) => {
+    const { productID } = useParams();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const urlRegex = /^(http|https):\/\/[^ "]+$/;
@@ -28,22 +30,49 @@ const Formtable = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);
-        try {
-            const response = await axios.post('/api/v1/products', formData, {
-                headers: {
-                   Authorization: `Bearer ${auth.token}` // Include the JWT token here
-                }});
-            console.log(response.data);
-        } catch (error) {
-            console.error('There was an error!', error);
+        if(isUpdateMode){
+            try{
+                const response = await axios.put(`/api/v1/products/${productID}`, formData, {
+                    headers: {
+                       Authorization: `Bearer ${auth.token}` // Include the JWT token here
+                    }});
+                console.log(response.data);
+            }
+            catch(error){
+                console.error('There was an error!', error);
+            }
+        }
+        else{
+            try {
+                const response = await axios.post('/api/v1/products', formData, {
+                    headers: {
+                       Authorization: `Bearer ${auth.token}` // Include the JWT token here
+                    }});
+                console.log(response.data);
+            } catch (error) {
+                console.error('There was an error!', error);
+            }
         }
     };
+
+    useEffect(() => {
+        if(isUpdateMode && productID) {
+            axios.get(`/api/v1/products/${productID}`)
+            .then((res) => {
+                console.log(res.data);
+                setFormData(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+    }
+    , [isUpdateMode, productID]);
     return (
         <form onSubmit={handleSubmit}>
-            
             <Box style={{ margin: '0 auto', maxWidth: '80%', marginTop:'20px', marginBottom: '20px' }}>
                 <Typography variant='h4' align={isMobile? 'center': 'left'}>
-                    Product Detail
+                    {isUpdateMode? `Update Product ${productID}`: 'Add Product'}
                 </Typography>
             </Box>
             <Box
@@ -73,7 +102,8 @@ const Formtable = () => {
                     }}>
                         <Grid item xs={12} md={12}>
                             <span style={{display: 'flex', alignItems: 'center'}}> Product Name </span>
-                            <TextField required id="productName" name="name"  
+                            <TextField required id="productName" name="name" 
+                            value={formData.name} 
                             onChange={handleInputChange}
                             fullWidth 
                             />
@@ -82,6 +112,7 @@ const Formtable = () => {
                             <span style={{display: 'flex', alignItems: 'center'}}> Product Description </span>
                             <TextField required id="productDescription" name="description" 
                                 multiline
+                                value={formData.description}
                                 rows={4}
                                 fullWidth
                                 onChange={handleInputChange} 
@@ -94,6 +125,7 @@ const Formtable = () => {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 onChange={handleInputChange}
+                                value={formData.category}
                                 fullWidth
                                 defaultValue="All"
                             >
@@ -106,6 +138,7 @@ const Formtable = () => {
                             {/* price */}
                             <span style={{display: 'flex', alignItems: 'center'}}> Price </span>
                             <TextField required id="productPrice" name="price" 
+                            value={formData.price}
                             onChange={handleInputChange}
                             type='number'
                             fullWidth />
@@ -113,7 +146,8 @@ const Formtable = () => {
                         <Grid item xs={12} md={4}>
                             {/* in store quantity */}
                             <span style={{display: 'flex', alignItems: 'center'}}> In Store Quantity </span>
-                            <TextField required id="productQuantity" name="inStockQuantity"  
+                            <TextField required id="productQuantity" name="inStockQuantity" 
+                            value={formData.inStockQuantity} 
                             onChange={handleInputChange}
                             fullWidth />
                         </Grid>
@@ -122,6 +156,7 @@ const Formtable = () => {
                             <span style={{display: 'flex', alignItems: 'center'}}> Add Image Link </span>
                             <TextField required id="productImage" name="imageUrl" defaultValue="http://" fullWidth
                                 error={!isUrlValid}
+                                value={formData.imageUrl}
                                 // helperText={!isUrlValid ? 'Please enter a valid URL' : ''}
                                 onChange={handleUrlChange}
                                 InputProps={{
@@ -169,7 +204,8 @@ const Formtable = () => {
                                 backgroundColor: '#5048E5',
                             }}
                             >
-                                Add Product
+                                {/* Add Product */}
+                                {isUpdateMode? 'Update Product': 'Add Product'}
                             </Button>
                         </Grid>
                     </Grid>

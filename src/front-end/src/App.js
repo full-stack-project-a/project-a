@@ -37,6 +37,9 @@ const AppContent = () => {
                   <Route path="/products/new" element={
                      isVendor ? <Formtable /> : <Navigate to="/" replace />
                   } />
+                  <Route path="/products/update/:productID" element={
+                     isVendor ? <Formtable isUpdateMode={true}/> : <Navigate to="/" replace />
+                  } />
 
                      <Route path="/checkout" element={<Checkout />} />
                      <Route path="/error" element={<ErrorPage />} />
