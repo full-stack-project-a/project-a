@@ -4,7 +4,7 @@ import '../../styles/main/global.css';
 import { FaYoutube, FaTwitter, FaFacebook } from "react-icons/fa";
 
 
-const Footer = () => {
+const Footer = React.memo(() => {
    const currentYear = new Date().getFullYear();
 
    return (
@@ -25,6 +25,6 @@ const Footer = () => {
          
       </footer>
    );
-};
+});
 
 export default Footer;
