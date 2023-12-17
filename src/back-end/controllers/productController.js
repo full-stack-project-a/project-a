@@ -27,9 +27,10 @@ async function getProducts(req, res) {
     const { price, limit = 10, page = 1 } = req.query;
     try {
         let query = Product.find();
-        query.sort({ createdAt: -1 });
         if (price === 'asc' || price === 'desc') {
             query.sort({ price: price === 'asc' ? 1 : -1 });
+        } else {
+            query.sort({ createdAt: -1 });
         }
         const pageSize = Math.max(limit, 10);
         const skip = (page - 1) * pageSize;
