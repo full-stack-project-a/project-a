@@ -9,4 +9,6 @@ export const SET_CART_NUMBER = 'SET_CART_NUMBER';
 export const CLEAR_CART = 'CLEAR_CART';
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
 export const PLACE_ORDER_FAILURE = 'PLACE_ORDER_FAILURE';
+export const SET_CART_ITEM_QUANTITY = 'SET_CART_ITEM_QUANTITY';
+export const RESET_CART = 'RESET_CART';
 // Add other action types as needed
