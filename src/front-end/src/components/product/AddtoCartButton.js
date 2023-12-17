@@ -27,17 +27,30 @@ function AddtoCart({ product }) {
       setCount(count - 1);
     }
   };
-  return (
-    <Button
-      onClick={handleIncrement}
-      variant="contained"
-      color="primary"
-      startIcon={count > 0 ? <RemoveIcon onClick={handleDecrement} /> : null}
-      endIcon={count > 0 ? <AddIcon /> : null}
-    >
-      {count > 0 ? count : 'Add'}
-    </Button>
-  );
+  if(count === 0){
+    return (
+      <Button
+        onClick={handleIncrement}
+        variant="contained"
+        color="primary"
+      >
+        Add
+      </Button>
+    );
+  }
+  else{
+    return (
+      <Button
+        // onClick={handleIncrement}
+        variant="contained"
+        color="primary"
+        startIcon={count > 0 ? <RemoveIcon onClick={handleDecrement} /> : null}
+        endIcon={count > 0 ? <AddIcon onClick={handleIncrement}  /> : null}
+      >
+        {count}
+      </Button>
+    );
+  }
 }
 
 export default AddtoCart;
