@@ -37,7 +37,7 @@ export const applyDiscountCode = async (discountCode) => {
 
 // Clear the shopping cart
 export const clearCart = async () => {
-    return axios.post(`${API_BASE_URL}/cart/${TEST_USER_ID}/clear`);
+    return axios.delete(`${API_BASE_URL}/cart/${TEST_USER_ID}/clear`);
 };
 
 // Fetch cart subtotal

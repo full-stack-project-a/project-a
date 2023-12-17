@@ -75,10 +75,28 @@ const updateItemToCart = async (req, res) => {
         const cartItem = cart.items.find(item => item.product.equals(productId));
 
         if (cartItem) {
+            // Check if the available stock is sufficient
+            const totalRequestedQuantity = cartItem.quantity + quantity;
+            // Check for negative quantity
+            if (totalRequestedQuantity < 0) {
+                return res.status(400).json({ message: 'Quantity cannot be less than 0' });
+            }
+
+            if (totalRequestedQuantity === 0) {
+                // Remove item from cart if quantity is zero
+                cart.items = cart.items.filter(item => !item.product.equals(productId));
+            }
+
+            if (totalRequestedQuantity > product.inStockQuantity) {
+                return res.status(400).json({ message: 'Requested quantity exceeds available stock' });
+            }
             // Update quantity if the product already exists in the cart
-            cartItem.quantity += quantity;
+            cartItem.quantity = totalRequestedQuantity;
         } else {
-            // Add a new item to the cart
+            // Add a new item to the cart if stock is sufficient
+            if (quantity > product.inStockQuantity) {
+                return res.status(400).json({ message: 'Requested quantity exceeds available stock' });
+            }
             cart.items.push({ product: productId, quantity });
         }
 
@@ -158,10 +176,28 @@ const updateItemInCart = async (req, res) => {
         const cartItem = cart.items.find(item => item.product.equals(productId));
 
         if (cartItem) {
+            // Check if the available stock is sufficient
+            const totalRequestedQuantity = cartItem.quantity + quantity;
+            // Check for negative quantity
+            if (totalRequestedQuantity < 0) {
+                return res.status(400).json({ message: 'Quantity cannot be less than 0' });
+            }
+
+            if (totalRequestedQuantity === 0) {
+                // Remove item from cart if quantity is zero
+                cart.items = cart.items.filter(item => !item.product.equals(productId));
+            }
+
+            if (totalRequestedQuantity > product.inStockQuantity) {
+                return res.status(400).json({ message: 'Requested quantity exceeds available stock' });
+            }
             // Update quantity if the product already exists in the cart
-            cartItem.quantity += quantity;
+            cartItem.quantity = totalRequestedQuantity;
         } else {
-            // Add a new item to the cart
+            // Add a new item to the cart if stock is sufficient
+            if (quantity > product.inStockQuantity) {
+                return res.status(400).json({ message: 'Requested quantity exceeds available stock' });
+            }
             cart.items.push({ product: productId, quantity });
         }
 

@@ -8,12 +8,12 @@ import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
-import { 
+import {
    fetchCartItems,
-   fetchTotalItemsNumber, 
-   fetchCartSubtotal, 
-   fetchCartTax, 
-   fetchCartTotal, 
+   fetchTotalItemsNumber,
+   fetchCartSubtotal,
+   fetchCartTax,
+   fetchCartTotal,
    fetchCartDiscount,
 } from '../../redux/actions/cartActions';
 
@@ -35,7 +35,7 @@ const Header = () => {
       dispatch(fetchCartTotal());
       dispatch(fetchCartDiscount());
       dispatch(fetchTotalItemsNumber());
-  }, [dispatch]);
+   }, [dispatch]);
 
    const toggleCartModal = () => {
       setShowCartModal(!showCartModal);
@@ -86,10 +86,12 @@ const Header = () => {
                <div className='cart-container' onClick={toggleCartModal}>
                   <div className='cart-icon-number'>
                      <FaCartArrowDown className='cart-icon' />
-                     <span className='cart-number'>{cartItemsNumber ? cartItemsNumber : '0'}</span>
+                     {cartItemsNumber > 0 &&
+                        <span className='cart-number'>{cartItemsNumber > 9 ? '9+' : cartItemsNumber}</span>
+                     }
                   </div>
 
-                  <p>${subtotal ? subtotal.toFixed(2) : '0.00'}</p>
+                  <p>${subtotal ? (subtotal > 999 ? '999+' : subtotal.toFixed(2)) : '0.00'}</p>
                </div>
 
             </div>

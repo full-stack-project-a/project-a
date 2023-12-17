@@ -1,4 +1,4 @@
-import { SET_CART_ITEMS, SET_CART_NUMBER, SET_ERROR, SET_SUBTOTAL, SET_TAX, SET_TOTAL, SET_DISCOUNT } from '../actions/actionTypes';
+import { SET_CART_ITEMS, SET_CART_NUMBER, SET_ERROR, SET_SUBTOTAL, SET_TAX, SET_TOTAL, SET_DISCOUNT, CLEAR_CART } from '../actions/actionTypes';
 
 
 const initialState = {
@@ -47,6 +47,10 @@ const shoppingCartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload
+            };
+        case CLEAR_CART:
+            return {
+                ...initialState
             };
         default:
             return state;
