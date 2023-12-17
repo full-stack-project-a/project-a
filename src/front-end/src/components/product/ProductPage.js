@@ -119,7 +119,7 @@ const ProductPage = () => {
                 </Grid>
             </Box>
             <Box style={{ margin: '0 auto', maxWidth: '100%', marginTop:'20px' }}>
-                <Paper elevation={24} style={{ margin: '0 auto', maxWidth: '80%', padding: '20px' }}>
+                <Paper elevation={24} style={{ margin: '0 auto', maxWidth: '95%', padding: '20px' }}>
                 <Grid container spacing={5} style={{ margin: '0 auto', maxWidth: '90%' }} >
                     {products.map((product) => (
                         <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product._id}>

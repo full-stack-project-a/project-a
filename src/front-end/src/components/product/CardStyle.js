@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
 import React from 'react';
 import AddtoCart from './AddtoCartButton';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ const ProductCard = ({product}) => {
             <CardMedia
             onClick={handleCardClick}
             component="img"
-            alt="green iguana"
+            alt="Product"
             height="140"
             image={ product.imageUrl ||"https://source.unsplash.com/random"}
             />
@@ -38,7 +38,7 @@ const ProductCard = ({product}) => {
                         <AddtoCart product={product} />
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant="outlined" color="primary" size="large" style={{
+                        <Button variant="outlined" color="primary"  style={{
                         }} fullWidth
                         onClick={() => navigate(`/products/update/${product._id}`)}
                         >
