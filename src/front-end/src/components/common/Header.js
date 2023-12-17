@@ -29,12 +29,12 @@ const Header = () => {
 
    useEffect(() => {
       // Dispatch actions to fetch initial cart data
-      dispatch(fetchCartItems());
-      dispatch(fetchCartSubtotal());
-      dispatch(fetchCartTax());
-      dispatch(fetchCartTotal());
-      dispatch(fetchCartDiscount());
-      dispatch(fetchTotalItemsNumber());
+      dispatch(fetchCartItems(auth.user.userId, auth.token));
+      dispatch(fetchCartSubtotal(auth.user.userId, auth.token));
+      dispatch(fetchCartTax(auth.user.userId, auth.token));
+      dispatch(fetchCartTotal(auth.user.userId, auth.token));
+      dispatch(fetchCartDiscount(auth.user.userId, auth.token));
+      dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
    }, [dispatch]);
 
    const toggleCartModal = () => {
