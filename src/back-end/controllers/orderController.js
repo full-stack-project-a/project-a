@@ -3,7 +3,7 @@ const ShoppingCart = require('../models/shoppingCart');
 
 // Create an order from the shopping cart
 const createOrder = async (req, res) => {
-    const userId = "hardcodedUserId";
+    const userId = req.params.userId;
 
     try {
         const cart = await ShoppingCart.findOne({ user: userId }).populate('items.product');
@@ -16,17 +16,28 @@ const createOrder = async (req, res) => {
             quantity: item.quantity
         }));
 
-        const totalCost = items.reduce((total, item) => total + item.quantity * item.product.price, 0);
+        const totalCost = cart.estimatedTotal;
 
         const newOrder = new Order({
             user: userId,
             items: items,
-            totalCost: totalCost
+            totalAmount: totalCost
         });
 
         await newOrder.save();
-        await ShoppingCart.findOneAndUpdate({ user: userId }, { $set: { items: [] } }); // Clear the cart
-
+        await ShoppingCart.findOneAndUpdate(
+            { user: userId },
+            {
+                $set: {
+                    items: [],
+                    totalItems: 0,
+                    subtotal: 0.0,
+                    tax: 0.0,
+                    discount: 0.0,
+                    estimatedTotal: 0.0
+                }
+            }
+        );
         res.status(201).json(newOrder);
     } catch (error) {
         res.status(500).json({ message: error.message });

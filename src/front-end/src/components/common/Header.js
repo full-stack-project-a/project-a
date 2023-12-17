@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useAppContext } from '../../context/AppContext';
 import '../../styles/main/header.css';
 import '../../styles/main/global.css';
@@ -7,32 +8,36 @@ import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import {
+   fetchCartItems,
+   fetchTotalItemsNumber,
+   fetchCartSubtotal,
+   fetchCartTax,
+   fetchCartTotal,
+   fetchCartDiscount,
+} from '../../redux/actions/cartActions';
 
 
 const Header = () => {
 
-   const BACK_END_API = 'http://localhost:8000/api/v1';
-   const TEST_USER_ID = '6577a7f2a4603ab4ef7cbd50';
-
    const { auth, setAuth } = useAppContext();
    const [showCartModal, setShowCartModal] = useState(false);
-   const [cartData, setCartData] = useState(null);
+   const dispatch = useDispatch();
 
-   // const fetchCartData = async (userId) => {
-      const fetchCartData = async () => {
-         try {
-             const response = await axios.get(`${BACK_END_API}/cart/${TEST_USER_ID}/load`);
-             setCartData(response.data);
-         } catch (error) {
-             console.error('Error fetching cart data:', error);
-         }
-     };
+   // Access cart data from Redux state
+   const { subtotal, cartItemsNumber } = useSelector(state => state.shoppingCart);
+
+   useEffect(() => {
+      // Dispatch actions to fetch initial cart data
+      dispatch(fetchCartItems());
+      dispatch(fetchCartSubtotal());
+      dispatch(fetchCartTax());
+      dispatch(fetchCartTotal());
+      dispatch(fetchCartDiscount());
+      dispatch(fetchTotalItemsNumber());
+   }, [dispatch]);
 
    const toggleCartModal = () => {
-      if (!showCartModal) {
-         fetchCartData(); // Fetch cart data when opening the modal
-      }
       setShowCartModal(!showCartModal);
    };
 
@@ -51,10 +56,6 @@ const Header = () => {
          navigate('/signin');
       }
    };
-
-   useEffect(() => {
-      fetchCartData();
-  }, []);
 
    return (
       <header className="header">
@@ -83,14 +84,20 @@ const Header = () => {
                   <p>{auth.isAuthenticated ? "Sign out" : "Sign in"}</p>
                </div>
                <div className='cart-container' onClick={toggleCartModal}>
-                  <FaCartArrowDown className='cart-icon' />
-                  <p>$0.00</p>
+                  <div className='cart-icon-number'>
+                     <FaCartArrowDown className='cart-icon' />
+                     {cartItemsNumber > 0 &&
+                        <span className='cart-number'>{cartItemsNumber > 9 ? '9+' : cartItemsNumber}</span>
+                     }
+                  </div>
+
+                  <p>${subtotal ? (subtotal > 999 ? '999+' : subtotal.toFixed(2)) : '0.00'}</p>
                </div>
 
             </div>
 
          </div>
-         <CartModel show={showCartModal} close={toggleCartModal} cartData={cartData}>
+         <CartModel show={showCartModal} close={toggleCartModal}>
          </CartModel>
       </header>
    );
