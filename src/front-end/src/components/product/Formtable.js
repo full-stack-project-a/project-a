@@ -24,7 +24,7 @@ const Formtable = () => {
         setIsUrlValid(urlRegex.test(event.target.value));
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
-    const { auth, setAuth, setIsLoading } = useAppContext();
+    const { auth } = useAppContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);
