@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import { useAppContext } from '../../context/AppContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { placeOrder } from '../../redux/actions/orderActions';
 
@@ -32,6 +33,7 @@ function getStepContent(step) {
 }
 
 export default function Checkout() {
+    const { auth, setAuth } = useAppContext();
     const dispatch = useDispatch();
     const order = useSelector(state => state.order.order);
 
@@ -40,7 +42,7 @@ export default function Checkout() {
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
             // Dispatch the placeOrder action when on the last step
-            dispatch(placeOrder());
+            dispatch(placeOrder(auth.user.userId, auth.token));
         }
         setActiveStep(activeStep + 1);
     };

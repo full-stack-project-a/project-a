@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAppContext } from '../../context/AppContext';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/cart/cart.css';
@@ -18,19 +19,21 @@ import {
 
 const CartModal = ({ show, close }) => {
 
+    const { auth, setAuth } = useAppContext();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { items, subtotal, tax, total, cartItemsNumber, discount } = useSelector(state => state.shoppingCart);
     const [discountCode, setDiscountCode] = useState('');
 
+
     useEffect(() => {
         if (show) {
-            dispatch(fetchCartItems());
-            dispatch(fetchTotalItemsNumber());
-            dispatch(fetchCartSubtotal());
-            dispatch(fetchCartTax());
-            dispatch(fetchCartTotal());
-            dispatch(fetchCartDiscount());
+            dispatch(fetchCartItems(auth.user.userId, auth.token));
+            dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
+            dispatch(fetchCartSubtotal(auth.user.userId, auth.token));
+            dispatch(fetchCartTax(auth.user.userId, auth.token));
+            dispatch(fetchCartTotal(auth.user.userId, auth.token));
+            dispatch(fetchCartDiscount(auth.user.userId, auth.token));
         }
     }, [dispatch, show]);
 
@@ -48,19 +51,19 @@ const CartModal = ({ show, close }) => {
     }
 
     const handleApplyDiscountCode = () => {
-        dispatch(applyDiscountCode(discountCode));
+        dispatch(applyDiscountCode(auth.user.userId, discountCode, auth.token));
     };
 
     const handleIncrementQuantity = (productId) => {
-        dispatch(updateCartItemQuantity(productId, 1));
+        dispatch(updateCartItemQuantity(auth.user.userId, productId, 1, auth.token));
     };
 
     const handleDecrementQuantity = (productId) => {
-        dispatch(updateCartItemQuantity(productId, -1));
+        dispatch(updateCartItemQuantity(auth.user.userId, productId, -1, auth.token));
     };
 
     const handleRemoveItem = (productId) => {
-        dispatch(removeCartItem(productId));
+        dispatch(removeCartItem(auth.user.userId, productId, auth.token));
     };
 
 
