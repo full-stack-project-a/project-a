@@ -6,7 +6,6 @@ import '../../styles/main/global.css';
 import CartModel from '../cart/CartModal'
 import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
-import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import {
    fetchCartItems,
@@ -17,6 +16,8 @@ import {
    fetchCartDiscount,
 } from '../../redux/actions/cartActions';
 
+import axios from 'axios';
+import SearchBar from './SearchBar';
 
 const Header = () => {
 
@@ -29,14 +30,14 @@ const Header = () => {
 
    useEffect(() => {
       // Dispatch actions to fetch initial cart data
-      dispatch(fetchCartItems());
-      dispatch(fetchCartSubtotal());
-      dispatch(fetchCartTax());
-      dispatch(fetchCartTotal());
-      dispatch(fetchCartDiscount());
-      dispatch(fetchTotalItemsNumber());
+      dispatch(fetchCartItems(auth.user.userId, auth.token));
+      dispatch(fetchCartSubtotal(auth.user.userId, auth.token));
+      dispatch(fetchCartTax(auth.user.userId, auth.token));
+      dispatch(fetchCartTotal(auth.user.userId, auth.token));
+      dispatch(fetchCartDiscount(auth.user.userId, auth.token));
+      dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
    }, [dispatch]);
-
+  
    const toggleCartModal = () => {
       setShowCartModal(!showCartModal);
    };
@@ -68,12 +69,8 @@ const Header = () => {
                </div>
 
             </div>
-            <div className='search-bar'>
-               <input type="text" className="searchText" placeholder="search" />
-               <button type="submit" className="searchButton">
-                  <CiSearch className='searchIcon' />
-               </button>
-            </div>
+
+            <SearchBar />
 
             <div className='profile-cart-container'>
                <div className='profile-container' onClick={handleProfileClick}>

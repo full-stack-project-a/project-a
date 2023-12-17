@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import { AppProvider, useAppContext } from './context/AppContext';
@@ -45,6 +46,7 @@ const AppContent = () => {
                      <Route path="/checkout" element={<Checkout />} />
                      <Route path="/error" element={<ErrorPage />} />
                      <Route path="/success" element={<SuccessPage />} />
+                       
                   {/* Add more routes as needed */}
                </Routes>
             </div>
