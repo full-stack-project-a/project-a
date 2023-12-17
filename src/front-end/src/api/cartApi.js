@@ -16,7 +16,7 @@ export const fetchCart = async (userId, token) => {
 
 // Add an item to the cart
 export const addItemToCart = async (userId, productId, quantity, token) => {
-    return axios.post(`${API_BASE_URL}/cart/${userId}/add`, {
+    return axios.post(`${API_BASE_URL}/cart/${userId}/cartItem/${productId}`, {
         productId,
         quantity
     }, {

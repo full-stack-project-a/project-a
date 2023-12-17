@@ -27,7 +27,7 @@ const CartModal = ({ show, close }) => {
 
 
     useEffect(() => {
-        if (show) {
+        if (show && auth.isAuthenticated && auth.user && auth.user.userId) {
             dispatch(fetchCartItems(auth.user.userId, auth.token));
             dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
             dispatch(fetchCartSubtotal(auth.user.userId, auth.token));
@@ -35,7 +35,7 @@ const CartModal = ({ show, close }) => {
             dispatch(fetchCartTotal(auth.user.userId, auth.token));
             dispatch(fetchCartDiscount(auth.user.userId, auth.token));
         }
-    }, [dispatch, show]);
+    }, [dispatch, show, auth.isAuthenticated, auth.user, auth.token]);
 
 
     const onCheckout = () => {

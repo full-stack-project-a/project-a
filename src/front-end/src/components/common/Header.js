@@ -29,14 +29,17 @@ const Header = () => {
    const { subtotal, cartItemsNumber } = useSelector(state => state.shoppingCart);
 
    useEffect(() => {
-      // Dispatch actions to fetch initial cart data
-      dispatch(fetchCartItems(auth.user.userId, auth.token));
-      dispatch(fetchCartSubtotal(auth.user.userId, auth.token));
-      dispatch(fetchCartTax(auth.user.userId, auth.token));
-      dispatch(fetchCartTotal(auth.user.userId, auth.token));
-      dispatch(fetchCartDiscount(auth.user.userId, auth.token));
-      dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
-   }, [dispatch]);
+      // Only dispatch actions if the user is authenticated and userId is available
+      if (auth.isAuthenticated && auth.user && auth.user.userId) {
+         dispatch(fetchCartItems(auth.user.userId, auth.token));
+         dispatch(fetchCartSubtotal(auth.user.userId, auth.token));
+         dispatch(fetchCartTax(auth.user.userId, auth.token));
+         dispatch(fetchCartTotal(auth.user.userId, auth.token));
+         dispatch(fetchCartDiscount(auth.user.userId, auth.token));
+         dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
+      }
+   }, [dispatch, auth.isAuthenticated, auth.user, auth.token]);
+   
   
    const toggleCartModal = () => {
       setShowCartModal(!showCartModal);

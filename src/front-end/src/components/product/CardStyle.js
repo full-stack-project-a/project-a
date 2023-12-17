@@ -35,7 +35,7 @@ const ProductCard = ({product}) => {
             <CardActions>
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
-                        <AddtoCart />
+                        <AddtoCart product={product} />
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" size="large" style={{
