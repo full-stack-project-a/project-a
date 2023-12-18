@@ -60,7 +60,7 @@ const ProductPage = () => {
             console.log(error);
         }
     };
-  
+
     const handlePageChange = (event, value) => {
         setPage(value);
     };
@@ -69,27 +69,27 @@ const ProductPage = () => {
         // get total size from enpoint /api/v1/products/count
         fetchProducts();
         axios.get(`api/v1/products/count`)
-        .then((res) => {
-            console.log(res.data);
-            setTotalSize(Math.ceil(res.data / 10));
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((res) => {
+                console.log(res.data);
+                setTotalSize(Math.ceil(res.data / 10));
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
-    , [searchQuery, page, filter]);
+        , [searchQuery, page, filter]);
 
-  
+
     return (
         <div>
-            <Box style={{ margin: '0 auto', maxWidth: '80%', marginTop:'20px' }}>
+            <Box style={{ margin: '0 auto', maxWidth: '80%', marginTop: '20px' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
-                        <Typography variant='h4' align={isMobile? 'center': 'left'}>
+                        <Typography variant='h4' align={isMobile ? 'center' : 'left'}>
                             Product Page
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={4} align={isMobile? 'center': 'right'}>
+                    <Grid item xs={12} sm={4} align={isMobile ? 'center' : 'right'}>
                         {/* <Box> */}
                         <Grid container spacing={3}>
                             {
@@ -97,25 +97,25 @@ const ProductPage = () => {
                                 </Grid>
                             }
                             <Grid item xs={12} sm={6}>
-                            <Select style={{ width:isMobile?'70%':'100%', marginRight: isMobile? '0':'20px'}}
+                                <Select style={{ width: isMobile ? '70%' : '100%', marginRight: isMobile ? '0' : '20px' }}
                                     defaultValue={filter}
                                     onChange={(e) => setFilter(e.target.value)}
-                            >
-                                {options.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                        <ListItemText primary={option} />
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                                >
+                                    {options.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                            <ListItemText primary={option} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
                             </Grid>
                             
                            { isVendor && <Grid item xs={12} sm={6}>
                                 <ThemeProvider theme={newTheme}>
-                                <Button variant="contained" color="primary" style={{height:'100%'}}
-                                    onClick={() => navigate(`/products/new`)}
-                                >
-                                    Add Product
-                                </Button>
+                                    <Button variant="contained" color="primary" style={{ height: '100%' }}
+                                        onClick={() => navigate(`/products/new`)}
+                                    >
+                                        Add Product
+                                    </Button>
                                 </ThemeProvider>
                             </Grid>}
                         </Grid>
@@ -123,6 +123,7 @@ const ProductPage = () => {
                     </Grid>
                 </Grid>
             </Box>
+
             <Box style={{ margin: '0 auto', maxWidth: '100%', marginTop:'20px' }}>
                 <Paper elevation={24} style={{ margin: '0 auto', maxWidth: '95%', padding: '20px' }}>
                 <Grid container spacing={5} style={{ margin: '0 auto', maxWidth: '90%' }} >
@@ -140,23 +141,23 @@ const ProductPage = () => {
                 </Paper>
             </Box>
             <ThemeProvider theme={newTheme}>
-            <Box display='flex' style={{ margin: '0 auto', maxWidth: '80%', marginTop: '20px' }}
-                justifyContent={isMobile ? 'center' : 'flex-end'}
-            >
-                {/* Pages select */}
-                <Pagination count={totalSize} shape="rounded" color='primary'
-                      page={page}
-                      onChange={handlePageChange}
+                <Box display='flex' style={{ margin: '0 auto', maxWidth: '80%', marginTop: '20px' }}
+                    justifyContent={isMobile ? 'center' : 'flex-end'}
+                >
+                    {/* Pages select */}
+                    <Pagination count={totalSize} shape="rounded" color='primary'
+                        page={page}
+                        onChange={handlePageChange}
 
-                    //   onPageChange={handleChangePage}
-                      renderItem={(item) => (
-                        <PaginationItem
-                          slots={{ previous: KeyboardDoubleArrowLeftIcon, next: KeyboardDoubleArrowRightIcon }}
-                          {...item}
-                        />
-                    )}
-                />
-            </Box>
+                        //   onPageChange={handleChangePage}
+                        renderItem={(item) => (
+                            <PaginationItem
+                                slots={{ previous: KeyboardDoubleArrowLeftIcon, next: KeyboardDoubleArrowRightIcon }}
+                                {...item}
+                            />
+                        )}
+                    />
+                </Box>
             </ThemeProvider>
         </div>
     )
