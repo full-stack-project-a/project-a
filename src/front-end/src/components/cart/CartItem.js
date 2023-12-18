@@ -3,7 +3,7 @@ import React from 'react';
 const CartItem = ({ item, incrementQuantity, decrementQuantity, handleRemoveItem }) => {
     return (
         <div className="cart-item">
-            <img src={item.imageUrl} alt={item.name} />
+            <img src={item.product.imageUrl} alt={item.name} />
 
             <div className="cart-item-details">
                 <div className='cart-item-name-price'>

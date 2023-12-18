@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAppContext } from '../../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/main/header.css';
 import '../../styles/main/global.css';
 import CartModel from '../cart/CartModal'
 import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
-import { useNavigate } from 'react-router-dom';
 import {
    fetchCartItems,
    fetchTotalItemsNumber,
@@ -25,6 +25,7 @@ const Header = () => {
    const [showCartModal, setShowCartModal] = useState(false);
    const dispatch = useDispatch();
 
+
    // Access cart data from Redux state
    const { subtotal, cartItemsNumber } = useSelector(state => state.shoppingCart);
 
@@ -39,8 +40,8 @@ const Header = () => {
          dispatch(fetchTotalItemsNumber(auth.user.userId, auth.token));
       }
    }, [dispatch, auth.isAuthenticated, auth.user, auth.token]);
-   
-  
+
+
    const toggleCartModal = () => {
       setShowCartModal(!showCartModal);
    };
@@ -62,15 +63,26 @@ const Header = () => {
       }
    };
 
+   const handleLogoClick = () => {
+      navigate("/products");
+   }
+
    return (
       <header className="header">
          <div className='header-container'>
             <div className='logo-container'>
-               <div className='logo-container-spans'>
+               {/* <div className='logo-container-spans'>
                   <span className='logo-management'>M</span>
                   <span className='logo-management-rest'>anagement</span>
                   <span className='logo-chuwa'>chuwa</span>
-               </div>
+               </div> */}
+               <button onClick={handleLogoClick} className="logo-container-button">
+                  <div className='logo-container-spans'>
+                     <span className='logo-management'>M</span>
+                     <span className='logo-management-rest'>anagement</span>
+                     <span className='logo-chuwa'>chuwa</span>
+                  </div>
+               </button>
 
             </div>
 
