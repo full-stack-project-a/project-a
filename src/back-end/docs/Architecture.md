@@ -10,21 +10,22 @@ post /api/auth/updatePassword
 
 ## protected routes:
 - need customer/vendor account to access
-post /api/v1/order
-post /api/v1/products/:userId/cartItem/:productId
-put /api/v1/products/:userId/cartItem/:productId
-delete /api/v1/products/:userId/cartItem/:productId
-post /api/v1/products/:userId/create
-get /api/v1/products/:userId/load
-delete /api/v1/products/:userId/clear
-delete /api/v1/products/:userId/delete
-get /api/v1/products/:userId/totalItems
-get /api/v1/products/:userId/subtotal
-get /api/v1/products/:userId/tax
-post /api/v1/products/:userId/discount
-get /api/v1/products/:userId/estimatedTotal
-get /api/v1/products/:userId/discount
-get /api/v1/products/:userId/cartItems
+post /api/v1/order/:userId
+post /api/v1/cart/:userId/cartItem/:productId
+put /api/v1/cart/:userId/cartItem/:productId
+delete /api/v1/cart/:userId/cartItem/:productId
+post /api/v1/cart/:userId/create
+get /api/v1/cart/:userId/load
+delete /api/v1/cart/:userId/clear
+delete /api/v1/cart/:userId/delete
+get /api/v1/cart/:userId/totalItems
+get /api/v1/cart/:userId/subtotal
+get /api/v1/cart/:userId/tax
+post /api/v1/cart/:userId/discount
+get /api/v1/cart/:userId/estimatedTotal
+get /api/v1/cart/:userId/discount
+get /api/v1/cart/:userId/cartItems
+get /api/v1/cart/:userId/cartItems/:productId/quantity
 
 ## vendor routes:
 - only vendor can access
