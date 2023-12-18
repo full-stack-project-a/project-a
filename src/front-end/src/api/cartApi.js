@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { useAppContext } from "../context/AppContext";
 // const { auth } = useAppContext();
 
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+const API_BASE_URL = '/api/v1';
 
 // Fetch cart items for a specific user
 export const fetchCart = async (userId, token) => {
