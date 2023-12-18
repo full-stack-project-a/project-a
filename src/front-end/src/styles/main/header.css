@@ -29,6 +29,18 @@
   font-size: 12px;
 }
 
+.logo-container-button {
+  background: none;
+  background-color: var(--primary-color-dark);
+  color: var(--primary-color-white);
+  font: var(--primary-font-family);
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
 .logo-management {
   font-size: 28px;
 }
@@ -127,11 +139,11 @@
   border-radius: 9px;
 
   font-size: 12px;
-    background: #ff0000;
-    color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -10px;
+  background: #ff0000;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -10px;
 }
 
 .cart-icon {
@@ -151,7 +163,6 @@
 
 @media screen and (max-width: 900px) {
   /* Styles for medium devices like landscape tablets */
-
   .header {
     gap: 4px;
   }

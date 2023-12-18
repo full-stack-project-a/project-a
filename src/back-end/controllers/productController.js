@@ -1,5 +1,6 @@
 const Product = require('../models/product');
-
+const { check, validationResult } = require('express-validator');
+const escapeRegExp = require('lodash.escaperegexp');
 async function createProduct(req, res) {
     try {
         const newProduct = new Product(req.body);
@@ -31,11 +32,13 @@ async function getProducts(req, res) {
 
         // search functionality
         if (search) {
+            // use lodash.escaperegexp to avoid regex injection attacks
+            let safeSearchString = escapeRegExp(search);
             query = query.find({
                 $or: [
-                    { name: new RegExp(search, 'i') },
-                    { description: new RegExp(search, 'i') },
-                    { category: new RegExp(search, 'i') }
+                    { name: new RegExp(safeSearchString, 'i') },
+                    { description: new RegExp(safeSearchString, 'i') },
+                    { category: new RegExp(safeSearchString, 'i') }
                 ]
             });
         }

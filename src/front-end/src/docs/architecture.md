@@ -26,6 +26,8 @@ Below is the directory structure of our project, highlighting the main folders a
     - `styles/`: All CSS and other style files.
         - `auth/`: Styles specific to authentication pages.
         - `main/`: Main stylesheet and other general styles.
+        - `cart/`: Styles specific to cart component.
+    - `temp`: temp directory
     - `docs/`: Documentation files for the project.
 
 ## Component Architecture
