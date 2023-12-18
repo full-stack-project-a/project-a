@@ -7,10 +7,10 @@ import { useAppContext } from '../../context/AppContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const range = (start, end) => {
-    const length = end - start + 1;
-    return Array.from({ length }, (_, i) => start + i);
-}
+// const range = (start, end) => {
+//     const length = end - start + 1;
+//     return Array.from({ length }, (_, i) => start + i);
+// }
 
 const newTheme = createTheme({
     palette: {
@@ -32,8 +32,8 @@ const ProductPage = () => {
     const [totalSize, setTotalSize] = useState(0);
     const [filter, setFilter] = useState("Last added");
     const [products, setProducts] = useState([]);
-    const { searchQuery } = useAppContext();
-
+    const { auth, searchQuery } = useAppContext();
+    const isVendor = auth.user && auth.user.role === 'vendor';
     const urlBuilder = () => {
         let baseurl = `/api/v1/products?limit=10`;
         if (filter === 'Price: Low to High') {
@@ -92,6 +92,10 @@ const ProductPage = () => {
                     <Grid item xs={12} sm={4} align={isMobile? 'center': 'right'}>
                         {/* <Box> */}
                         <Grid container spacing={3}>
+                            {
+                                !isVendor && <Grid item xs={12} sm={6}>
+                                </Grid>
+                            }
                             <Grid item xs={12} sm={6}>
                             <Select style={{ width:isMobile?'70%':'100%', marginRight: isMobile? '0':'20px'}}
                                     defaultValue={filter}
@@ -104,7 +108,8 @@ const ProductPage = () => {
                                 ))}
                             </Select>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            
+                           { isVendor && <Grid item xs={12} sm={6}>
                                 <ThemeProvider theme={newTheme}>
                                 <Button variant="contained" color="primary" style={{height:'100%'}}
                                     onClick={() => navigate(`/products/new`)}
@@ -112,7 +117,7 @@ const ProductPage = () => {
                                     Add Product
                                 </Button>
                                 </ThemeProvider>
-                            </Grid>
+                            </Grid>}
                         </Grid>
                         {/* </Box> */}
                     </Grid>

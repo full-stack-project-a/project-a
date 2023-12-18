@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,7 +10,6 @@ import { fetchCartItemQuantity } from '../../redux/actions/cartActions';
 function AddtoCart({ product }) {
   const { auth } = useAppContext();
   const dispatch = useDispatch();
-
   // Retrieve the item's quantity from the Redux store
   const count = useSelector(state => {
     const foundItem = state.shoppingCart.items.find(item =>
@@ -61,8 +60,8 @@ function AddtoCart({ product }) {
         // onClick={handleIncrement}
         variant="contained"
         color="primary"
-        startIcon={count > 0 ? <RemoveIcon onClick={handleDecrement} /> : null}
-        endIcon={count > 0 ? <AddIcon onClick={handleIncrement} /> : null}
+        startIcon={ <RemoveIcon onClick={handleDecrement} /> }
+        endIcon={ <AddIcon onClick={handleIncrement} /> }
       >
         {count}
       </Button>
