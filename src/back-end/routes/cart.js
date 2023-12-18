@@ -46,5 +46,7 @@ router.get('/:userId/discount', authenticateToken, verifyTokenAndRole("authentic
 // Get the cart items
 router.get('/:userId/cartItems', authenticateToken, verifyTokenAndRole("authenticated"), shoppingCartController.getCartItems);
 
+// Get the cart item's quantity
+router.get('/:userId/cartItems/:productId/quantity', authenticateToken, verifyTokenAndRole("authenticated"), shoppingCartController.getCartItemQuantity);
 
 module.exports = router;

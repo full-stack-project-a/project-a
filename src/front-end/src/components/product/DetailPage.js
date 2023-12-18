@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import AddtoCart from './AddtoCartButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAppContext } from '../../context/AppContext';
+
 const newTheme = createTheme({
     palette: {
         primary: {
@@ -18,6 +20,8 @@ const DetailPage = () => {
     const isMobile = useMediaQuery(newTheme.breakpoints.down('sm'));
     const [product, setProduct] = useState(null);
     const navigate = useNavigate();
+    const { auth } = useAppContext();
+    const isVendor = auth.user && auth.user.role === 'vendor';
     useEffect(() => {
         axios.get(`/api/v1/products/${id}`)
         .then((res) => {
@@ -95,18 +99,22 @@ const DetailPage = () => {
                                 alignItems: 'center',
                             }}
                             >
-                                <AddtoCart/>
-                                <Button
+                                <AddtoCart product={product}/>
+                                {
+                                    isVendor && <Button
                                     // variant="contained"
-                                    variant='outlined'
-                                    style={{
-                                        color: '#CCCCCC',
-                                        borderColor: '#CCCCCC',
-                                        marginLeft: '20px',      
-                                    }}
-                                >
-                                    Edit
-                                </Button>
+                                        variant='outlined'
+                                        style={{
+                                            // color: '#CCCCCC',
+                                            // borderColor: '#CCCCCC',
+                                            marginLeft: '20px',      
+                                        }}
+                                        onClick={() => navigate(`/products/update/${product._id}`)}
+                                    >
+                                        Edit
+                                    </Button>
+                                }
+                                
                             </Box>
                             
                         </Grid>

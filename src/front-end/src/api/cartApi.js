@@ -3,7 +3,6 @@ import axios from 'axios';
 // const { auth } = useAppContext();
 
 const API_BASE_URL = 'http://localhost:8000/api/v1';
-// const TEST_USER_ID = '6577a7f2a4603ab4ef7cbd50';
 
 // Fetch cart items for a specific user
 export const fetchCart = async (userId, token) => {
@@ -16,7 +15,7 @@ export const fetchCart = async (userId, token) => {
 
 // Add an item to the cart
 export const addItemToCart = async (userId, productId, quantity, token) => {
-    return axios.post(`${API_BASE_URL}/cart/${userId}/add`, {
+    return axios.post(`${API_BASE_URL}/cart/${userId}/cartItem/${productId}`, {
         productId,
         quantity
     }, {
@@ -127,4 +126,13 @@ export const fetchCartItemsNumber = async (userId, token) => {
         }
      });
 };
+
+// Fetch an item number's quantity
+export const fetchCartItemQuantity = async (userId, productId, token) => {
+    return axios.get(`${API_BASE_URL}/cart/${userId}/cartItems/${productId}/quantity`, {
+        headers: {
+           Authorization: `Bearer ${token}` // Include the JWT token here
+        }
+     });
+}
 
