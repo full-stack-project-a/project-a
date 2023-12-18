@@ -131,6 +131,7 @@ const ProductPage = () => {
                         <Grid item xs={12} md={isMobile ? 12 : 2.4} key={product._id}>
                             <Box>
                                 <ProductCard
+                                    key={product._id}
                                     product={product}
                                 />
                             </Box>    
