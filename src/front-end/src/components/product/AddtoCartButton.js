@@ -12,6 +12,7 @@ function AddtoCart({ product }) {
   const { auth } = useAppContext();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   // Retrieve the item's quantity from the Redux store
   const count = useSelector(state => {
     const foundItem = state.shoppingCart.items.find(item =>
@@ -23,6 +24,9 @@ function AddtoCart({ product }) {
   useEffect(() => {
     if (product && product.productId && count > 0 && auth.isAuthenticated && auth.user && auth.user.userId) {
       dispatch(fetchCartItemQuantity(auth.user.userId, product.productId, auth.token));
+    }
+    if(product && product.inStockQuantity === 0){
+      setIsDisabled(true);
     }
   }, [count, auth.token, auth.user, dispatch, product, auth.isAuthenticated]);
 
@@ -56,6 +60,7 @@ function AddtoCart({ product }) {
         loading={loading}
         variant="contained"
         color="primary"
+        disabled={isDisabled}
       >
         Add
       </LoadingButton>
