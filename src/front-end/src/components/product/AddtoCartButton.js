@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { addItemToCart } from '../../redux/actions/cartActions';
 import { useAppContext } from '../../context/AppContext';
 import { fetchCartItemQuantity } from '../../redux/actions/cartActions';
@@ -10,7 +11,8 @@ import { fetchCartItemQuantity } from '../../redux/actions/cartActions';
 function AddtoCart({ product }) {
   const { auth } = useAppContext();
   const dispatch = useDispatch();
-
+  const [loading, setLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   // Retrieve the item's quantity from the Redux store
   const count = useSelector(state => {
     const foundItem = state.shoppingCart.items.find(item =>
@@ -23,6 +25,9 @@ function AddtoCart({ product }) {
     if (product && product.productId && count > 0 && auth.isAuthenticated && auth.user && auth.user.userId) {
       dispatch(fetchCartItemQuantity(auth.user.userId, product.productId, auth.token));
     }
+    if(product && product.inStockQuantity === 0){
+      setIsDisabled(true);
+    }
   }, [count, auth.token, auth.user, dispatch, product, auth.isAuthenticated]);
 
   const handleIncrement = () => {
@@ -30,6 +35,8 @@ function AddtoCart({ product }) {
       alert('Please sign in first');
       return;
     }
+    setLoading(true);
+    setTimeout(() => setLoading(false), 500);
     dispatch(addItemToCart(auth.user.userId, product._id, 1, auth.token));
   };
 
@@ -39,6 +46,8 @@ function AddtoCart({ product }) {
       return;
     }
     if (count > 0) {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 500);
       dispatch(addItemToCart(auth.user.userId, product._id, -1, auth.token));
     }
   };
@@ -46,26 +55,29 @@ function AddtoCart({ product }) {
 
   if (count === 0) {
     return (
-      <Button
+      <LoadingButton
         onClick={handleIncrement}
+        loading={loading}
         variant="contained"
         color="primary"
+        disabled={isDisabled}
       >
         Add
-      </Button>
+      </LoadingButton>
     );
   }
   else {
     return (
-      <Button
+      <LoadingButton
         // onClick={handleIncrement}
+        loading={loading}
         variant="contained"
         color="primary"
-        startIcon={count > 0 ? <RemoveIcon onClick={handleDecrement} /> : null}
-        endIcon={count > 0 ? <AddIcon onClick={handleIncrement} /> : null}
+        startIcon={ <RemoveIcon onClick={handleDecrement} /> }
+        endIcon={ <AddIcon onClick={handleIncrement} /> }
       >
         {count}
-      </Button>
+      </LoadingButton>
     );
   }
 }

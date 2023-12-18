@@ -2,6 +2,7 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, ThemeProv
 import React from 'react';
 import AddtoCart from './AddtoCartButton';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from "../../context/AppContext";
 const theme = createTheme({
     palette: {
         primary: {
@@ -15,6 +16,8 @@ const ProductCard = ({product}) => {
         navigate(`/products/${product._id}`);
         // console.log(`/products/${product._id}`);
     }
+    const { auth } = useAppContext();
+    const isVendor = auth.user && auth.user.role === 'vendor';
     return (
         <ThemeProvider theme={theme}>
         <Card>
@@ -34,16 +37,24 @@ const ProductCard = ({product}) => {
             </Typography>
             <CardActions>
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={isVendor? 6:12}>
                         <AddtoCart product={product} />
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant="outlined" color="primary"  style={{
+                        {
+                            isVendor && <Button variant="outlined" color="primary"  style={{
+                            }} fullWidth
+                            onClick={() => navigate(`/products/update/${product._id}`)}
+                            >
+                                Edit
+                            </Button>
+                        }
+                        {/* <Button variant="outlined" color="primary"  style={{
                         }} fullWidth
                         onClick={() => navigate(`/products/update/${product._id}`)}
                         >
-                            Edit
-                        </Button>
+                            Edit 
+                        </Button> */}
                     </Grid>
                 </Grid>
             </CardActions>
