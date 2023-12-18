@@ -71,11 +71,6 @@ const Header = () => {
       <header className="header">
          <div className='header-container'>
             <div className='logo-container'>
-               {/* <div className='logo-container-spans'>
-                  <span className='logo-management'>M</span>
-                  <span className='logo-management-rest'>anagement</span>
-                  <span className='logo-chuwa'>chuwa</span>
-               </div> */}
                <button onClick={handleLogoClick} className="logo-container-button">
                   <div className='logo-container-spans'>
                      <span className='logo-management'>M</span>

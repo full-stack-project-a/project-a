@@ -163,7 +163,6 @@
 
 @media screen and (max-width: 900px) {
   /* Styles for medium devices like landscape tablets */
-
   .header {
     gap: 4px;
   }
