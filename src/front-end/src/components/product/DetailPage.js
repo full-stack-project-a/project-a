@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, Grid, Paper, Button, Alert, createTheme, ThemeProvider } from '@mui/material';
+import { Box, Typography, useMediaQuery, Grid, Paper, Button, Alert, createTheme, ThemeProvider, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AddtoCart from './AddtoCartButton';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,7 +22,12 @@ const DetailPage = () => {
     const navigate = useNavigate();
     const { auth } = useAppContext();
     const isVendor = auth.user && auth.user.role === 'vendor';
+    const [isLoading, setIsLoading] = useState(true);
+    const PaperStyle = isMobile? 
+    { padding: '16px', maxWidth: '100%', maxHeight: 'auto'}: 
+    { padding: '16px', width: '90%', height: '60vh'};
     useEffect(() => {
+        setTimeout(() => {setIsLoading(false)}, 500);
         axios.get(`/api/v1/products/${id}`)
         .then((res) => {
             console.log(res.data);
@@ -32,6 +37,15 @@ const DetailPage = () => {
             navigate('/error');
         })
     }, [id]);
+    if(isLoading){
+        return(
+            <Box display="flex" justifyContent="center" alignItems="center" height="100%"
+                style={{ marginTop: '20vh' }}
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
     return (
         <div>
             <ThemeProvider theme={newTheme}>
@@ -48,7 +62,7 @@ const DetailPage = () => {
                     height: '100%',
                   }}
                 >
-                    <Paper elevation={3} style={{ padding: '16px', maxWidth: '100%', maxHeight: 'auto'}}>
+                    <Paper elevation={3} style={PaperStyle}>
                         <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
                             <Box
@@ -58,7 +72,7 @@ const DetailPage = () => {
                                     overflow: 'hidden'
                                 }}
                             >
-                                <img src="https://source.unsplash.com/random" alt="Product" style={{ width: '80%', height: '80%' }} />
+                                <img src={product.imageUrl} alt="Product" style={{ width: '80%', height: '80%' }} />
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={6}>
