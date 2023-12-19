@@ -11,7 +11,8 @@ const Formtable = ({isUpdateMode = false}) => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const urlRegex = /^(http|https):\/\/[^ "]+$/;
     const [isUrlValid, setIsUrlValid] = useState(true);
-    
+    const [isImgUploaded, setIsImgUploaded] = useState(false);
+
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -166,7 +167,9 @@ const Formtable = ({isUpdateMode = false}) => {
                                     endAdornment:(
                                         <Button variant="contained" color="primary" size="large" style={{
                                             backgroundColor: '#5048E5',
-                                        }}>
+                                        }}
+                                        onClick={() => setIsImgUploaded(true)}
+                                        >
                                             Upload
                                         </Button>
                                     ),
@@ -188,10 +191,13 @@ const Formtable = ({isUpdateMode = false}) => {
                                     gap: '10px'
                                 }}
                                 > 
+                            {isImgUploaded && <img src={formData.imageUrl} alt="Product" style={{ width: '80%', height: '80%' }} />}
+                            { !isImgUploaded &&
                             <IconButton color="primary" aria-label="upload picture" component="label">
                                 <input hidden accept="image/*" type="file" />
                                 <InsertPhotoIcon fontSize="large" />
                             </IconButton>
+                            }
                             <Typography variant="body1">image preview!</Typography>
                             </Box>
                         </Grid>
