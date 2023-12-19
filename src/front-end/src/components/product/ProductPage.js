@@ -32,7 +32,7 @@ const ProductPage = () => {
     const [totalSize, setTotalSize] = useState(0);
     const [filter, setFilter] = useState("Last added");
     const [products, setProducts] = useState([]);
-    const { auth, searchQuery } = useAppContext();
+    const { auth, searchQuery, setIsLoading } = useAppContext();
     const isVendor = auth.user && auth.user.role === 'vendor';
     const urlBuilder = () => {
         let baseurl = `/api/v1/products?limit=10`;
@@ -49,6 +49,7 @@ const ProductPage = () => {
 
     const fetchProducts = async () => {
         try {
+            setIsLoading(true);
             let url = urlBuilder();
             if (searchQuery) {
                 // remove whitespace some dummy user will add
@@ -58,6 +59,8 @@ const ProductPage = () => {
             setProducts(res.data);
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
